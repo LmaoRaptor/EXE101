@@ -26,25 +26,25 @@ const HomePage = () => {
               <span>online from the US</span>
               <span>
                 <span>bussiness</span>
-                <span className="bg-gradient-to-r from-[#47dada] to-[#625df6] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#47da51] to-[#09772a] bg-clip-text text-transparent">
                   {" "}
                   you love
                 </span>
               </span>
             </div>
-            <div className="ml-14 rotate-12 flex text-center flex-col justify-center items-center rounded-full size-20 bg-gradient-to-r from-[#9dfdfd] from-0% via-slate-200 via-70% to-[#a7a5f0] to-90%">
+            <div className="ml-14 rotate-12 flex text-center flex-col justify-center items-center rounded-full size-20 bg-gradient-to-r from-[#64d08f] from-0% via-slate-200 via-70% to-[#64eb98] to-90%">
               <span className="font-semibold">200K+</span> Products
             </div>
           </div>
         </div>
         <div className="flex justify-center items-end gap-4 mt-6">
-          <div className="h-80 w-72 rounded-3xl bg-[#918efc]"></div>
+          <div className="h-80 w-72 rounded-3xl bg-green-950"></div>
           <div>
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="text-gray-300">
                 And for a limited time only...
               </div>
-              <button className="rounded-2xl bg-[#635ef7] p-2">
+              <button className="rounded-2xl bg-green-950 p-2 text-white">
                 Join the Y.S for FREE
               </button>
               <div
@@ -55,12 +55,12 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex gap-4 items-end">
-              <div className="h-56 w-48 bg-purple-300 rounded-3xl"></div>
-              <div className="h-36 w-48 bg-gray-200 rounded-3xl"></div>
-              <div className="h-56 w-48 bg-purple-100 rounded-3xl"></div>
+              <div className="h-56 w-48 bg-green-700 rounded-3xl"></div>
+              <div className="h-36 w-48 bg-green-900 rounded-3xl"></div>
+              <div className="h-56 w-48 bg-green-800 rounded-3xl"></div>
             </div>
           </div>
-          <div className="h-80 w-72 rounded-3xl bg-[#2a61db]"></div>
+          <div className="h-80 w-72 rounded-3xl bg-green-900"></div>
         </div>
       </div>
       <div>
@@ -103,7 +103,7 @@ const HomePage = () => {
               <div className="bg-green-900 rounded-2xl h-64 w-1/2"></div>
             </div>
           </div>
-          <div className="flex flex-1 flex-col gap-2">
+          <div className="flex flex-1 flex-col gap-1">
             <div className="flex gap-2 flex-1">
               <div className="bg-green-900 rounded-2xl h-[420px] w-1/2"></div>
               <div className="bg-green-900 rounded-2xl h-[420px] w-1/2"></div>

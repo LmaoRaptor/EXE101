@@ -65,12 +65,12 @@ const Navbar = () => {
           <div className="size-10 bg-gray-100 rounded-lg">A</div>
         </div>
         <ul className="flex gap-10 items-center justify-center list-none text-[12px]">
-          <li>Catefory Product</li>
-          <li>Catefory Product</li>
-          <li>Catefory Product</li>
-          <li>Catefory Product</li>
-          <li>Catefory Product</li>
-          <li>Catefory Product</li>
+          <li>Xe đạp</li>
+          <li>Điện thoại</li>
+          <li>Máy ảnh</li>
+          <li>Bàn học</li>
+          <li>Ghế ngồi</li>
+          <li>Chuột máy tính</li>
         </ul>
       </div>
       <div className="h-10 bg-black rounded-lg text-white ">Premium</div>
