@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className="size-5 rounded-lg bg-gray-300"></div>
           </div>
         </div>
-        <div className="flex flex-col gap-[0.7px]">
+        <div className="flex flex-col gap-[0.7px] text-left">
           <span className="text-[14px] leading-[14px]">DEPARTMENT</span>
           <span className="text-gray-300 text-[12px] leading-3">
             Description
@@ -73,7 +73,9 @@ const Navbar = () => {
           <li>Chuột máy tính</li>
         </ul>
       </div>
-      <div className="h-10 bg-black rounded-lg text-white ">Premium</div>
+      <div className="h-10 bg-green-900 rounded-lg text-white uppercase flex items-center justify-center font-medium text-[14px] pl-3 pr-3">
+        Premium
+      </div>
 
       <img
         src="https://www.themeparkinsider.com/assets/PROF_NewUserIcon.png"
