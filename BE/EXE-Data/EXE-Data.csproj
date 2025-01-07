@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>EXE_API</RootNamespace>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>EXE_Data</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.35" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.35" />
@@ -16,17 +16,4 @@
 		<PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.33" />
 		<PackageReference Include="Ulid" Version="1.3.4" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Content Update="appsettings.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\EXE-Data\EXE-Data.csproj" />
-	</ItemGroup>
-
 </Project>
