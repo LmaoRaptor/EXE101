@@ -1,10 +1,7 @@
 ﻿using EXE_Data.Data;
 using EXE_Data.Data.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EXE_Data.Data.EnumType;
+using Microsoft.EntityFrameworkCore;
 
 namespace EXE_Data.Infrastructure.Repositories
 {
@@ -13,6 +10,22 @@ namespace EXE_Data.Infrastructure.Repositories
         public PostRepository(AppDBContext dbContext) : base(dbContext)
         {
 
+        }
+
+        public virtual void Delete(Post entity, bool isHardDelete = false)
+        {
+            entity.Status = PostStatusEnum.Deleted;
+            dbset.Update(entity);
+        }
+
+        public virtual void Delete(Ulid id)
+        {
+            var entity = dbset.Find(id);
+            if(entity != null)
+            {
+                entity.Status = PostStatusEnum.Deleted;
+                dbset.Update(entity);
+            }
         }
     }
 }

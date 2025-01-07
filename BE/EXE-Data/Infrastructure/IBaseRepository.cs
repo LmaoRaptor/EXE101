@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace EXE_Data.Infrastructure
 {
@@ -17,11 +12,10 @@ namespace EXE_Data.Infrastructure
         void Update(List<T> entity);
         void Delete(T entity, bool isHardDelete = false);
         void Delete(Ulid id);
-        void Delete(Expression<Func<T, bool>> where, bool isHardDelete = false);
-        IQueryable<T> GetQuery();
         IQueryable<T> GetQuery(Expression<Func<T, bool>> where);
         T GetById(Ulid Id);
         Task<T?> GetByIdAsync(Ulid id);
+        IEnumerable<T> GetAll();
 
     }
 }

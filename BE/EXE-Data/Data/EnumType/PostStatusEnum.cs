@@ -4,6 +4,7 @@
     {
         New,
         OnGoing,
-        Closed
+        Closed,
+        Deleted
     }
 }

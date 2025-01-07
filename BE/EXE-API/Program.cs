@@ -1,4 +1,5 @@
 using EXE_Data.Data;
+using EXE_Data.Infrastructure;
 using EXE_Data.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,13 +18,14 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 });
 
 // Dependency Injection
-builder.Services.AddTransient<AppDBContext>();
-builder.Services.AddTransient<UserRepository>();
-builder.Services.AddTransient<PostRepository>();
-builder.Services.AddTransient<CategoryRepository>();
-builder.Services.AddTransient<SubCategoryRepository>();
-builder.Services.AddTransient<ImageRepository>();
-builder.Services.AddTransient<RoleRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<AppDBContext>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<PostRepository>();
+builder.Services.AddScoped<CategoryRepository>();
+builder.Services.AddScoped<SubCategoryRepository>();
+builder.Services.AddScoped<ImageRepository>();
+builder.Services.AddScoped<RoleRepository>();
 
 //----------------------------------build----------------------------------
 var app = builder.Build();

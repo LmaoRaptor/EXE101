@@ -1,11 +1,6 @@
 ﻿using EXE_Data.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EXE_Data.Infrastructure
 {
@@ -53,15 +48,6 @@ namespace EXE_Data.Infrastructure
             }
         }
 
-        public virtual void Delete(Expression<Func<T, bool>> where, bool isHardDelete = false)
-        {
-            var entites = GetQuery(where).AsEnumerable();
-            foreach(var entity in entites)
-            {
-                Delete(entity);
-            }
-        }
-
         public virtual T GetById(Ulid Id)
         {
             return dbset.Find(Id);
@@ -72,14 +58,9 @@ namespace EXE_Data.Infrastructure
             return await dbset.FindAsync(id);
         }
 
-        public IQueryable<T> GetQuery()
-        {
-            return dbset.AsQueryable();
-        }
-
         public IQueryable<T> GetQuery(Expression<Func<T, bool>> where)
         {
-            return dbset.Where(where).AsQueryable();
+            return dbset.Where(where);
         }
 
         public virtual void Update(T entity)
@@ -90,6 +71,10 @@ namespace EXE_Data.Infrastructure
         public void Update(List<T> entity)
         {
             entity.ForEach(e => Update(e));
+        }
+        public IEnumerable<T> GetAll()
+        {
+            return dbset.AsEnumerable();
         }
     }
 }
