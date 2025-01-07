@@ -1,4 +1,5 @@
 using EXE_Data.Data;
+using EXE_Data.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,16 @@ builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Dependency Injection
+builder.Services.AddTransient<AppDBContext>();
+builder.Services.AddTransient<UserRepository>();
+builder.Services.AddTransient<PostRepository>();
+builder.Services.AddTransient<CategoryRepository>();
+builder.Services.AddTransient<SubCategoryRepository>();
+builder.Services.AddTransient<ImageRepository>();
+builder.Services.AddTransient<RoleRepository>();
+
+//----------------------------------build----------------------------------
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
