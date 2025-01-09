@@ -1,4 +1,5 @@
 ﻿using EXE_Bussiness.Model.PostModel;
+using EXE_Bussiness.Service.PostService;
 using EXE_Data.Data.Entity;
 using EXE_Data.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,12 @@ namespace EXE_API.Controllers
     public class PostController : ControllerBase
     {
         IUnitOfWork _unitOfWork;
-        public PostController(IUnitOfWork unitOfWork)
+        private readonly IPostService _postService;
+
+        public PostController(IUnitOfWork unitOfWork, IPostService postService)
         {
             this._unitOfWork = unitOfWork;
+            this._postService = postService;
         }
         // GET: api/<PostController>
         [HttpGet("list")]
@@ -82,6 +86,16 @@ namespace EXE_API.Controllers
             _unitOfWork.PostRepository.Delete(post);
             await _unitOfWork.SaveChangesAsync();
             return Ok();
+        }
+
+        // Filter api/<PostController>/filter
+        public async Task<IActionResult> Filter([FromBody] PostFilter postFilter)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            return Ok(_postService.Filter(postFilter));
         }
     }
 }

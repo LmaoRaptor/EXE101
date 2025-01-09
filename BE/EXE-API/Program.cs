@@ -1,3 +1,4 @@
+using EXE_Bussiness.Service.PostService;
 using EXE_Data.Data;
 using EXE_Data.Infrastructure;
 using EXE_Data.Infrastructure.Repositories;
@@ -26,6 +27,8 @@ builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<SubCategoryRepository>();
 builder.Services.AddScoped<ImageRepository>();
 builder.Services.AddScoped<RoleRepository>();
+//-----------------------------------------------------------------------
+builder.Services.AddScoped<IPostService, PostService>();
 
 //----------------------------------build----------------------------------
 var app = builder.Build();

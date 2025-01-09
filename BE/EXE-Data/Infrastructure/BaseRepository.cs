@@ -62,6 +62,10 @@ namespace EXE_Data.Infrastructure
         {
             return dbset.Where(where);
         }
+        public IQueryable<T> GetQuery()
+        {
+            return dbset;
+        }
 
         public virtual void Update(T entity)
         {

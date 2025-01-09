@@ -12,6 +12,7 @@ namespace EXE_Data.Infrastructure
         void Update(List<T> entity);
         void Delete(T entity, bool isHardDelete = false);
         void Delete(Ulid id);
+        IQueryable<T> GetQuery();
         IQueryable<T> GetQuery(Expression<Func<T, bool>> where);
         T GetById(Ulid Id);
         Task<T?> GetByIdAsync(Ulid id);

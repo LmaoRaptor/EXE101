@@ -15,7 +15,9 @@ namespace EXE_Bussiness.Model.PostModel
         public string? CreatedAt { get; set; }
         public string? UpdatedAt { get; set; }
         public string UserId { get; set; }
+        public User? User { get; set; }
         public string SubCategoryId { get; set; }
+        public SubCategory? SubCategory { get; set; }
     }
 
     public static class PostDTOExtension
@@ -32,7 +34,9 @@ namespace EXE_Bussiness.Model.PostModel
                 UpdatedAt = post.UpdatedAt.ToString(),
                 CreatedAt = post.CreatedAt.ToString(),
                 UserId = post.UserId.ToString(),
-                SubCategoryId = post.SubCategoryId.ToString()
+                User = post.User,
+                SubCategoryId = post.SubCategoryId.ToString(),
+                SubCategory = post.SubCategory
             };
         }
 
