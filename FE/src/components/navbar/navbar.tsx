@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div className="flex gap-4">
       <img
-        src="https://play-lh.googleusercontent.com/PBaSSruwuNhxncBMFow9U6JlXc5z5izVB1dryEXrmov9QatM2a4fSVss2v6Zlw8nJ1o"
+        src="../../public/img/473011454_2406611166391019_8921612744282241904_n.png"
         alt="123"
         height={40}
         width={40}
