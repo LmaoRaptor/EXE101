@@ -1,101 +1,106 @@
 ﻿using EXE_Bussiness.Model.PostModel;
 using EXE_Bussiness.Service.PostService;
-using EXE_Data.Data.Entity;
-using EXE_Data.Infrastructure;
+using EXE_Data.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-//||==========================================================================||
-//|| mấy cái đơn giản thì không cần dùng service mà chỉ cần dùng unit of work ||
-//||==========================================================================||
 namespace EXE_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
     {
-        IUnitOfWork _unitOfWork;
         private readonly IPostService _postService;
+        private readonly AppDBContext _context;
 
-        public PostController(IUnitOfWork unitOfWork, IPostService postService)
+        public PostController(IPostService postService, AppDBContext _context)
         {
-            this._unitOfWork = unitOfWork;
             this._postService = postService;
-        }
-        // GET: api/<PostController>
-        [HttpGet("list")]
-        public IActionResult GetAll()
-        {
-            var posts = _unitOfWork.PostRepository.GetAll();
-            List<PostDTO> postDTOs = new List<PostDTO>();
-            foreach(var post in posts)
-            {
-                postDTOs.Add(post.ToDTO());
-            }
-            return Ok(postDTOs);
+            this._context = _context;
         }
 
         // GET api/<PostController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            Ulid ulid = Ulid.Parse(id);
-            Post post = await _unitOfWork.PostRepository.GetByIdAsync(ulid);
-            if(post == null)
+            Ulid ulid;
+            if(!Ulid.TryParse(id, out ulid))
             {
-                return NotFound();
+                return BadRequest("id not in format");
             }
-            return Ok(post.ToDTO());
+            return Ok(_postService.GetPostDetail(ulid));
+
+        }
+
+        // GET api/<PostController>
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _postService.GetPostList());
+        }
+
+        // Filter api/<PostController>/filter
+        [HttpGet("filter")]
+        public async Task<IActionResult> Filter([FromQuery] PostFilterRequest postFilter)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            return Ok(await _postService.Filter(postFilter));
         }
 
         // POST api/<PostController>
         [HttpPost("add")]
-        public async Task<IActionResult> AddPost([FromBody] PostDTO postDTO)
+        public async Task<IActionResult> AddPost([FromBody] PostCreateRequest postCreate)
         {
-            Post post = postDTO.ToEntity();
-            _unitOfWork.PostRepository.AddAsync(post);
-            await _unitOfWork.SaveChangesAsync();
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var user = await _context.Users.FindAsync(Ulid.Parse(postCreate.UserId));
+            if (!user.IsSaler)
+            {
+                return Forbid("User can not sell");
+            }
+            await _postService.CreatePost(postCreate, user);
             return Ok();
         }
 
         // PUT api/<PostController>/5
         [HttpPut("{id}/update")]
-        public async Task<IActionResult> UpdateById(string id, PostDTO postDTO)
+        public async Task<IActionResult> UpdateById(string id, PostUpdateRequest postUpdate)
         {
-            Post post = await _unitOfWork.PostRepository.GetByIdAsync(Ulid.Parse(id));
-            if(post == null)
+            Ulid ulid;
+            if(!Ulid.TryParse(id, out ulid) || !ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest("id not in format");
             }
-            post = postDTO.ToEntity();
-
-            _unitOfWork.PostRepository.Update(post);
-            await _unitOfWork.SaveChangesAsync();
+            var result = await _postService.UpdatePost(ulid, postUpdate);
+            if(!result)
+            {
+                return NotFound("Post not found");
+            }
             return Ok();
+
         }
 
         // DELETE api/<PostController>/
         [HttpDelete("{id}/delete")]
         public async Task<IActionResult> DeleteById(string id)
         {
-            Post post = _unitOfWork.PostRepository.GetById(Ulid.Parse(id));
-            if(post == null)
+            Ulid ulid;
+            if(!Ulid.TryParse(id, out ulid))
             {
-                return NotFound();
+                return BadRequest("id not in format");
             }
-            _unitOfWork.PostRepository.Delete(post);
-            await _unitOfWork.SaveChangesAsync();
+            var result = await _postService.DeletePost(ulid);
+            if(!result)
+            {
+                return NotFound("Post not found");
+            }
             return Ok();
-        }
-
-        // Filter api/<PostController>/filter
-        public async Task<IActionResult> Filter([FromBody] PostFilter postFilter)
-        {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            return Ok(_postService.Filter(postFilter));
         }
     }
 }

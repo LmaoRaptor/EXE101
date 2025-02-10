@@ -3,7 +3,8 @@
     public enum UserStatusEnum
     {
         Customer,
-        Seller,
+        Premium,
+        Banned,
         Active,
         Deleted
     }

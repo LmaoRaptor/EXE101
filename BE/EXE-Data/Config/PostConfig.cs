@@ -13,6 +13,7 @@ namespace EXE_Data.Config
             builder.Property(x => x.Id).HasConversion<UlidToBytesConverter>();
             builder.HasOne(x => x.User).WithMany(x => x.Posts).HasForeignKey(x => x.UserId);
             builder.HasOne(x => x.SubCategory).WithMany(x => x.Posts).HasForeignKey(x => x.SubCategoryId);
+            builder.HasOne(x => x.Category).WithMany(x => x.Posts).HasForeignKey(x => x.CategoryId);
         }
     }
 }

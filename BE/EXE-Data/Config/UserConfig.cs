@@ -11,6 +11,7 @@ namespace EXE_Data.Config
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasConversion<UlidToBytesConverter>();
+            builder.Property(x => x.IsSaler).HasDefaultValue(false);
         }
     }
 }

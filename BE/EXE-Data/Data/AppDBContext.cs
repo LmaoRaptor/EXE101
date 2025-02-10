@@ -6,10 +6,10 @@ namespace EXE_Data.Data
 {
     public class AppDBContext : IdentityDbContext<User, Role, Ulid>
     {
-        DbSet<Post> Posts { get; set; }
-        DbSet<Category> Categories { get; set; }
-        DbSet<SubCategory> SubCategories { get; set; }
-        DbSet<Image> Images { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public AppDBContext(DbContextOptions options) : base(options)
         {
