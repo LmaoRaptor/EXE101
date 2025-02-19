@@ -33,7 +33,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddDbContext<AppDBContext>(options =>
 {
-	options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
+	options.UseMySQL(builder.Configuration.GetConnectionString("DeployConnection"));
 });
 
 builder.Services.AddSingleton(new MapperConfiguration(config =>
