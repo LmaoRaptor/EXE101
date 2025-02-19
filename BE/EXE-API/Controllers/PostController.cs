@@ -2,6 +2,7 @@
 using EXE_Bussiness.Service.PostService;
 using EXE_Data.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace EXE_API.Controllers
@@ -54,15 +55,16 @@ namespace EXE_API.Controllers
 		[HttpPost("add")]
 		public async Task<IActionResult> AddPost([FromBody] PostCreateRequest postCreate)
 		{
-			if(!ModelState.IsValid)
+			if(!ModelState.IsValid || (postCreate.ContactPhone.IsNullOrEmpty() && postCreate.ContactOther.IsNullOrEmpty()))
 			{
-				return BadRequest();
+				return BadRequest("Request model not valid");
 			}
 			var user = await _context.Users.FindAsync(Ulid.Parse(postCreate.UserId));
 			if(!user.IsSaler)
 			{
 				return BadRequest("User can not sell");
 			}
+
 			await _postService.CreatePost(postCreate, user);
 			return Ok();
 		}

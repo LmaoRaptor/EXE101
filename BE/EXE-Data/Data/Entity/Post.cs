@@ -11,6 +11,8 @@ namespace EXE_Data.Data.Entity
 		public Ulid Id { get; set; }
 		public string? Title { get; set; }
 		public decimal Price { get; set; }
+		public string? ContactPhone { get; set; }
+		public string? ContactOther { get; set; }
 		public string? Description { get; set; }
 		public PostStatusEnum Status { get; set; }
 		public DateTime CreatedAt { get; set; }
