@@ -93,7 +93,15 @@ builder.Services.AddScoped<IImageService, ImageService>();
 //VnPay
 builder.Services.AddScoped<IVnPayService, VnPayService>();
 //-----------------------------------------------------------------------
-
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowAll", policy =>
+	{
+		policy.AllowAnyOrigin()
+			  .AllowAnyHeader()
+			  .AllowAnyMethod();
+	});
+});
 //----------------------------------build----------------------------------
 var app = builder.Build();
 
@@ -109,7 +117,7 @@ if(app.Environment.IsDevelopment())
 	DBSeedData.Seed(dbContext, userManager);
 
 }
-
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
