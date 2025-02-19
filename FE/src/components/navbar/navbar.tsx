@@ -62,7 +62,6 @@ const Navbar = () => {
               required
             />
           </div>
-          <div className="size-10 bg-gray-100 rounded-lg">A</div>
         </div>
         <ul className="flex gap-10 items-center justify-center list-none text-[12px]">
           <li>Xe đạp</li>
@@ -75,6 +74,14 @@ const Navbar = () => {
       </div>
       <div className="h-10 bg-green-900 rounded-lg text-white uppercase flex items-center justify-center font-medium text-[14px] pl-3 pr-3">
         Premium
+      </div>
+      <div
+        className="h-10 bg-green-900 rounded-lg text-white uppercase 
+      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+      whitespace-nowrap cursor-pointer"
+        onClick={() => navigate("/create")}
+      >
+        Đăng đồ
       </div>
 
       <img

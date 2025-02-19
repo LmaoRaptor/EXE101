@@ -13,6 +13,7 @@ import ListingPage from "./pages/listingPage";
 import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
 import { ToastContainer } from "react-toastify";
+import CreatePage from "./pages/createPage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function AppWrapper() {
               <Route path="/" element={<HomePage />} />
               <Route path="/products" element={<ListingPage />} />
               <Route path="/products/:id" element={<DetailPage />} />
+              <Route path="/create" element={<CreatePage />} />
             </Routes>
           </div>
           <Footer />
