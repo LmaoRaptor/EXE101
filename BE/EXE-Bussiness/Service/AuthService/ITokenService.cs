@@ -4,15 +4,15 @@ using System.Security.Claims;
 
 namespace EXE_Bussiness.Service.TokenService
 {
-    public interface ITokenService
-    {
-        Task<JwtSecurityToken> CreateTokenAsync(User user);
+	public interface ITokenService
+	{
+		Task<JwtSecurityToken> CreateTokenAsync(User user);
 
-        string CreateRefreshToken();
+		string CreateRefreshToken();
 
-        ClaimsPrincipal GetClaimsPrincipalFromExpiredToken(string token);
+		ClaimsPrincipal GetClaimsPrincipalFromExpiredToken(string token);
 
-        string GetSerializeObject(object value);
+		string GetSerializeObject(object value);
 
-    }
+	}
 }

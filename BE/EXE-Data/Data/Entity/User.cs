@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EXE_Data.Data.Entity
 {
-    public class User : IdentityUser<Ulid>
-    {
-        public UserStatusEnum Status { get; set; }
-        public int Level { get; set; }
-        public bool IsSaler { get; set; }
-        public DateTime PremiumExpired { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public ICollection<Post>? Posts { get; set; }
-    }
+	public class User : IdentityUser<Ulid>
+	{
+		public UserStatusEnum Status { get; set; }
+		public int Level { get; set; }
+		public bool IsSaler { get; set; }
+		public DateTime PremiumExpired { get; set; }
+		public DateTime CreatedAt { get; set; }
+		public DateTime UpdatedAt { get; set; }
+		public ICollection<Post>? Posts { get; set; }
+	}
 }

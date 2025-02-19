@@ -2,7 +2,7 @@
 
 namespace EXE_Data.Data.Entity
 {
-    public class Role : IdentityRole<Ulid>
-    {
-    }
+	public class Role : IdentityRole<Ulid>
+	{
+	}
 }
