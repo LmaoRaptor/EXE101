@@ -1,10 +1,11 @@
-﻿namespace EXE_Data.Data.EnumType
+﻿using System.ComponentModel;
+
+namespace EXE_Data.Data.EnumType
 {
 	public enum PostStatusEnum
 	{
 		New,
-		OnGoing,
-		Closed,
-		Deleted
+		[Description("Sold Out")]
+		SoldOut
 	}
 }

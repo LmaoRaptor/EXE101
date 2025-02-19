@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EXE_Bussiness.Model.UserModel;
 using EXE_Data.Data;
+using EXE_Data.Data.EnumType;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -22,6 +23,18 @@ namespace EXE_Bussiness.Service.UserService
 		{
 			var users = await _context.Users.ToListAsync();
 			return _mapper.Map<List<UserDTO>>(users);
+		}
+
+		public async Task<bool> UpgradeAccount(Ulid id)
+		{
+			var user = await _context.Users.FindAsync(id);
+			if(user == null)
+			{
+				return false;
+			}
+			user.Status = UserStatusEnum.Premium;
+
+			return true;
 		}
 	}
 }

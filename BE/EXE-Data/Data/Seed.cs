@@ -12,10 +12,10 @@ namespace EXE_Data.Data
 		}
 		public static void Seed(AppDBContext context, UserManager<User> userManager)
 		{
-			var admin = new User { Id = Ulid.NewUlid(), UserName = "admin", Email = "admin@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 10, Status = EnumType.UserStatusEnum.Active };
-			var vinh = new User { Id = Ulid.NewUlid(), UserName = "vinh", Email = "vinh@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 1, Status = EnumType.UserStatusEnum.Premium };
+			var admin = new User { Id = Ulid.NewUlid(), UserName = "admin", Email = "admin@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 10, Status = EnumType.UserStatusEnum.Customer };
+			var vinh = new User { Id = Ulid.NewUlid(), UserName = "vinh", Email = "vinh@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 1, Status = EnumType.UserStatusEnum.Customer };
 			var tien = new User { Id = Ulid.NewUlid(), UserName = "tien", Email = "tien@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 2, Status = EnumType.UserStatusEnum.Customer };
-			var cuong = new User { Id = Ulid.NewUlid(), UserName = "cuong", Email = "cuong@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 9, Status = EnumType.UserStatusEnum.Deleted };
+			var cuong = new User { Id = Ulid.NewUlid(), UserName = "cuong", Email = "cuong@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 9, Status = EnumType.UserStatusEnum.Customer };
 
 			var roles = new List<Role>(){
 				new Role { Id = Ulid.NewUlid(), Name = "Admin", NormalizedName = "ADMIN" },
@@ -138,7 +138,7 @@ namespace EXE_Data.Data
 					Title = "Post 1",
 					Price = 100,
 					Description = "Description 1",
-					Status = EnumType.PostStatusEnum.Deleted,
+					Status = EnumType.PostStatusEnum.New,
 					CreatedAt = DateTime.Now,
 					UpdatedAt = DateTime.Now,
 					UserId = context.Users.FirstOrDefault().Id,

@@ -2,6 +2,7 @@
 using EXE_Bussiness.Model.AuthModel;
 using EXE_Bussiness.Service.TokenService;
 using EXE_Data.Data.Entity;
+using EXE_Data.Data.EnumType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -83,8 +84,14 @@ namespace EXE_API.Controllers
 			var user = new User()
 			{
 				Id = id,
-				UserName = $"user{id.ToString()}",
+				UserName = $"user_{id.ToString().ToLower()}",
 				Email = register.Email,
+				CreatedAt = DateTime.Now,
+				UpdatedAt = DateTime.Now,
+				IsSaler = false,
+				Level = 0,
+				Status = UserStatusEnum.Customer
+
 			};
 			var result = await _userManager.CreateAsync(user, register.Password);
 			if(!result.Succeeded)
@@ -93,6 +100,7 @@ namespace EXE_API.Controllers
 					ModelState.AddModelError("error", error.Description);
 				return BadRequest(ModelState);
 			}
+			await _userManager.AddToRoleAsync(user, "User");
 			return Ok();
 		}
 

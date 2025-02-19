@@ -5,7 +5,6 @@
 		Customer,
 		Premium,
 		Banned,
-		Active,
 		Deleted
 	}
 }
