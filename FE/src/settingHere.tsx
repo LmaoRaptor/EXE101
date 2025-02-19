@@ -1,1 +1,1 @@
-export const DEFAULT_URL = "http://18.138.252.28:5000/";
+export const DEFAULT_URL = "https://yardsale.poggles.art/BE/";
