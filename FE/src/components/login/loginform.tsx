@@ -35,6 +35,7 @@ function LoginForm({ handleSubmitForm }: LoginFormProps) {
     <form
       className="bg-white p-6 rounded shadow-md w-96"
       onSubmit={handleSubmit}
+      style={{ position: "absolute", marginTop: "120px", width: "500px" }}
     >
       <h2 className="text-2xl mb-4 text-center">Login</h2>
       <div className="mb-4">

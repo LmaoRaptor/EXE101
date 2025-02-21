@@ -2,15 +2,23 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DEFAULT_URL } from "../../settingHere";
 
 function RegisterForm() {
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const navigate = useNavigate();
 
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value: string = e.target.value;
+    const value = e.target.value;
     setPassword(value);
+    setConfirmPassword(value); // Gán confirmPassword bằng password
     validatePassword(value);
   };
 
@@ -25,13 +33,30 @@ function RegisterForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!passwordError) {
-      toast.success("Registration successful!");
-      navigate("/login");
-    } else {
+
+    if (passwordError) {
       toast.error("Please fix the errors before submitting.");
+      return;
+    }
+
+    try {
+      const response = await fetch(DEFAULT_URL + "/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, confirmPassword }),
+      });
+      console.log(response.ok);
+      if (response.ok) {
+        toast.success("Registration successful!");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -42,17 +67,13 @@ function RegisterForm() {
     >
       <h2 className="text-2xl mb-4 text-center">Register</h2>
       <div className="mb-4">
-        <label className="block text-gray-700">Username</label>
-        <input
-          type="text"
-          className="w-full p-2 border border-gray-300 rounded mt-1"
-        />
-      </div>
-      <div className="mb-4">
         <label className="block text-gray-700">Email</label>
         <input
           type="email"
+          value={email}
+          onChange={handleEmailChange}
           className="w-full p-2 border border-gray-300 rounded mt-1"
+          required
         />
       </div>
       <div className="mb-4">
@@ -62,6 +83,7 @@ function RegisterForm() {
           value={password}
           onChange={handlePasswordChange}
           className="w-full p-2 border border-gray-300 rounded mt-1"
+          required
         />
         {passwordError && (
           <p className="text-red-500 text-sm mt-2">{passwordError}</p>

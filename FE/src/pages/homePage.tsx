@@ -39,8 +39,11 @@ const HomePage = () => {
         </div>
         <div className="flex justify-center items-end gap-4 mt-6">
           <div className="h-80 w-72 rounded-3xl bg-green-950">
-          <img className="size-full object-cover rounded-2xl" src="https://upload.wikimedia.org/wikipedia/commons/0/08/240314_Kim_Ji-won.jpg" alt="" />
-            
+            <img
+              className="size-full object-cover rounded-2xl"
+              src="https://fact-depot.com/media/product/55363/Chau-nhua-trong-cay-2-day-PY-Tropical-2066-N-mau-nau-27.8-x-28cm-10-lit-.webp"
+              alt=""
+            />
           </div>
           <div>
             <div className="flex flex-col items-center justify-center gap-6">
@@ -58,24 +61,35 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex gap-4 items-end">
-              <div className="h-56 w-48 bg-green-700 rounded-3xl">
-              <img className="size-full object-cover rounded-2xl" src="https://yt3.googleusercontent.com/Qn2VnmXGN22O_PbTTojSIWufYA0FbCs2T9CyCin72WuYXZNEP2pLze9erKbqJeCRr5wK7FR9M2g=s900-c-k-c0x00ffffff-no-rj" alt="" />
-
+              <div className="h-56 w-48 rounded-3xl border border-solid border-gray-300">
+                <img
+                  className="size-full object-cover rounded-2xl"
+                  src="https://product.hstatic.net/200000560101/product/img_6797_84396c9f0f014ef9bf2d5511af9fddf7_large.png"
+                  alt=""
+                />
               </div>
               <div className="h-36 w-48 bg-green-900 rounded-3xl">
-              <img className="size-full object-cover rounded-2xl" src="https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2021/07/lol-t1-1.jpg" alt="" />
-
+                <img
+                  className="size-full object-cover rounded-2xl"
+                  src="https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2021/07/lol-t1-1.jpg"
+                  alt=""
+                />
               </div>
               <div className="h-56 w-48 bg-green-800 rounded-3xl">
-
-              <img className="size-full object-cover rounded-2xl" src="https://i.pinimg.com/736x/30/b5/49/30b54999b098050158ed13a1ecdcaab0.jpg" alt="" />
-
+                <img
+                  className="size-full object-cover rounded-2xl"
+                  src="https://i.pinimg.com/736x/30/b5/49/30b54999b098050158ed13a1ecdcaab0.jpg"
+                  alt=""
+                />
               </div>
             </div>
           </div>
           <div className="h-80 w-72 rounded-3xl bg-green-900">
-          <img className="size-full object-cover rounded-2xl" src="https://media-cdn-v2.laodong.vn/storage/newsportal/2024/9/27/1400046/Kim-Ji-Won-Bvlgari-1-06.jpg" alt="" />
-
+            <img
+              className="size-full object-cover rounded-2xl"
+              src="https://www.phucanh.vn/media/news/2312_laptop-moi-cua-lenovo-1.jpg"
+              alt=""
+            />
           </div>
         </div>
       </div>
@@ -112,38 +126,60 @@ const HomePage = () => {
         </div>
         <div className="mt-6 flex gap-4">
           <div className="flex gap-2 flex-col w-1/2">
-            <div className="bg-green-900 rounded-2xl h-44" >
-              <img className="size-full object-cover rounded-2xl" src="https://i.upanh.org/2023/05/12/wp11849501-219-4k-wallpapers3b55a43b520d0456.jpeg" alt="" />
+            <div className="bg-green-900 rounded-2xl h-44">
+              <img
+                className="size-full object-cover rounded-2xl"
+                src="https://i.upanh.org/2023/05/12/wp11849501-219-4k-wallpapers3b55a43b520d0456.jpeg"
+                alt=""
+              />
             </div>
             <div className="bg-green-900 rounded-2xl h-44">
-            <img className="size-full object-cover rounded-2xl" src="https://e0.pxfuel.com/wallpapers/985/881/desktop-wallpaper-21-9-dump.jpg" alt="" />
-
+              <img
+                className="size-full object-cover rounded-2xl"
+                src="https://e0.pxfuel.com/wallpapers/985/881/desktop-wallpaper-21-9-dump.jpg"
+                alt=""
+              />
             </div>
             <div className="flex gap-2">
               <div className="bg-green-900 rounded-2xl h-64 w-1/2">
-              <img className="size-full object-cover rounded-2xl" src="https://i.scdn.co/image/ab67616d0000b273c7550ff04fd6d0e4fd83cdbc" alt="" />
-
+                <img
+                  className="size-full object-cover rounded-2xl"
+                  src="https://i.scdn.co/image/ab67616d0000b273c7550ff04fd6d0e4fd83cdbc"
+                  alt=""
+                />
               </div>
               <div className="bg-green-900 rounded-2xl h-64 w-1/2">
-              <img className="size-full object-cover rounded-2xl" src="https://images8.alphacoders.com/126/thumb-1920-1268734.jpg" alt="" />
-
+                <img
+                  className="size-full object-cover rounded-2xl"
+                  src="https://images8.alphacoders.com/126/thumb-1920-1268734.jpg"
+                  alt=""
+                />
               </div>
             </div>
           </div>
           <div className="flex flex-1 flex-col gap-1">
             <div className="flex gap-2 flex-1">
               <div className="bg-green-900 rounded-2xl h-[420px] w-1/2">
-              <img className="size-full object-cover rounded-2xl" src="https://macone.vn/wp-content/uploads/2021/12/269902633_648553806568650_2291142193696422643_n-1024x1024.jpeg" alt="" />
-            
+                <img
+                  className="size-full object-cover rounded-2xl"
+                  src="https://macone.vn/wp-content/uploads/2021/12/269902633_648553806568650_2291142193696422643_n-1024x1024.jpeg"
+                  alt=""
+                />
               </div>
               <div className="bg-green-900 rounded-2xl h-[420px] w-1/2">
-              <img className="size-full object-cover rounded-2xl" src="https://i.pinimg.com/736x/30/65/ba/3065baa066cf332bdebf83dd4a4169cf.jpg" alt="" />
-
+                <img
+                  className="size-full object-cover rounded-2xl"
+                  src="https://i.pinimg.com/736x/30/65/ba/3065baa066cf332bdebf83dd4a4169cf.jpg"
+                  alt=""
+                />
               </div>
             </div>
             <div className="bg-green-900 rounded-2xl h-48">
-            <img className="size-full object-cover rounded-2xl" src="https://wallpapers.com/images/featured/ultrawide-7qegghybz7ab8a7q.jpg" alt="" />
-
+              <img
+                className="size-full object-cover rounded-2xl"
+                src="https://wallpapers.com/images/featured/ultrawide-7qegghybz7ab8a7q.jpg"
+                alt=""
+              />
             </div>
           </div>
         </div>

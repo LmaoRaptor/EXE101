@@ -11,8 +11,14 @@ function LoginPage() {
     sessionStorage.setItem("token", "pass");
   };
   return (
-    <div className="flex items-center justify-center bg-gray-100 h-screen overflow-hidden">
+    <div
+      className="flex items-center justify-center h-screen overflow-hidden"
+      style={{
+        backgroundColor: "#f8ecdb",
+      }}
+    >
       <LoginForm handleSubmitForm={handleSubmitForm} />
+      <img src="../public/img/login.png" alt="" />
     </div>
   );
 }
