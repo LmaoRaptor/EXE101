@@ -49,7 +49,6 @@ function RegisterForm() {
         },
         body: JSON.stringify({ email, password, confirmPassword }),
       });
-      console.log(response.ok);
       if (response.ok) {
         toast.success("Registration successful!");
         navigate("/login");

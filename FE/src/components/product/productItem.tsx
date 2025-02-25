@@ -9,9 +9,16 @@ type ProductCardProps = {
   discount?: string;
   deliveryDate: string;
   imgSrc: string;
+  idProduct: string;
 };
 
-const ProductItem: FC<ProductCardProps> = ({ brand, title, price, imgSrc }) => {
+const ProductItem: FC<ProductCardProps> = ({
+  brand,
+  title,
+  price,
+  imgSrc,
+  idProduct,
+}) => {
   const navigate = useNavigate();
   return (
     <div className="border border-gray-200 rounded-lg p-4 shadow-sm text-left">
@@ -28,9 +35,9 @@ const ProductItem: FC<ProductCardProps> = ({ brand, title, price, imgSrc }) => {
 
       <button
         className="mt-4 w-full text-black border border-green-900 py-2 rounded-md hover:bg-green-900 hover:text-white transition"
-        onClick={() => navigate("/products/1")}
+        onClick={() => navigate(`/products/${idProduct}`)}
       >
-        Buy Now
+        Mua ngay
       </button>
     </div>
   );
