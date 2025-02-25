@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Form,
   Input,
@@ -55,6 +57,7 @@ const descriptions = [
 const CreatePage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     try {
@@ -78,6 +81,7 @@ const CreatePage = () => {
       if (response.ok) {
         message.success("Item created successfully!");
         form.resetFields();
+        navigate("/products");
       } else {
         message.error("Failed to create item.");
       }
@@ -99,7 +103,7 @@ const CreatePage = () => {
           .replace("${price}", price);
         form.setFieldsValue({ description: randomDescription });
         setLoading(false);
-      }, 1000);
+      }, 3000);
     }
   };
 
