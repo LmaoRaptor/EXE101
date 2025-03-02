@@ -173,6 +173,8 @@ const CreatePage = () => {
           </Form.Item>
         </div>
 
+        <h1>đã thêm</h1>
+
         <Form.Item label="Upload Images" name="images">
           <Upload
             customRequest={handleUpload}
