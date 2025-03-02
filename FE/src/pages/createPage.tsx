@@ -13,6 +13,20 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DEFAULT_URL } from "../settingHere";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
+const REGION = import.meta.env.VITE_REGION;
+const BUCKET_NAME = import.meta.env.VITE_BUCKET_NAME;
+const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
+const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+
+const s3Client = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_KEY,
+  },
+});
 
 const buttonStyle = {
   backgroundColor: "#14532d", // bg-green-900
@@ -54,6 +68,35 @@ const CreatePage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [imageUrls, setImageUrls] = useState([]);
+
+  const handleUpload = async ({ file, onSuccess, onError }) => {
+    const fileName = `${Date.now()}-${file.name}`;
+
+    try {
+      const fileBuffer = await file.arrayBuffer(); // Chuyển thành ArrayBuffer
+      const fileUint8Array = new Uint8Array(fileBuffer); // Chuyển thành Uint8Array
+
+      const uploadParams = {
+        Bucket: BUCKET_NAME,
+        Key: fileName,
+        Body: fileUint8Array, // Sử dụng Uint8Array thay vì file trực tiếp
+        ContentType: file.type,
+        ACL: "public-read",
+      };
+      await s3Client.send(new PutObjectCommand(uploadParams));
+      // URL của ảnh sau khi upload thành công
+      //const imageUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`;
+      //console.log(imageUrl);
+      //setImageUrls((prev) => [...prev, imageUrl]);
+      //onSuccess(imageUrl);
+      message.success("Upload thành công!");
+    } catch (error) {
+      console.error("Upload failed:", error);
+      onError(error);
+      message.error("Upload thất bại!");
+    }
+  };
 
   const onFinish = async (values) => {
     try {
@@ -131,7 +174,11 @@ const CreatePage = () => {
         </div>
 
         <Form.Item label="Upload Images" name="images">
-          <Upload listType="picture-card" maxCount={4}>
+          <Upload
+            customRequest={handleUpload}
+            listType="picture-card"
+            maxCount={4}
+          >
             <Button icon={<UploadOutlined />}></Button>
           </Upload>
         </Form.Item>
