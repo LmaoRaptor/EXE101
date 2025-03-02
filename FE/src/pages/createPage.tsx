@@ -71,8 +71,8 @@ const CreatePage = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   const handleUpload = async ({ file, onSuccess, onError }) => {
+    console.log("pass");
     const fileName = `${Date.now()}-${file.name}`;
-
     try {
       const fileBuffer = await file.arrayBuffer(); // Chuyển thành ArrayBuffer
       const fileUint8Array = new Uint8Array(fileBuffer); // Chuyển thành Uint8Array
