@@ -82,7 +82,6 @@ const CreatePage = () => {
         Key: fileName,
         Body: fileUint8Array, // Sử dụng Uint8Array thay vì file trực tiếp
         ContentType: file.type,
-        ACL: "public-read",
       };
       await s3Client.send(new PutObjectCommand(uploadParams));
       // URL của ảnh sau khi upload thành công
@@ -172,8 +171,6 @@ const CreatePage = () => {
             />
           </Form.Item>
         </div>
-
-        <h1>đã thêm</h1>
 
         <Form.Item label="Upload Images" name="images">
           <Upload
