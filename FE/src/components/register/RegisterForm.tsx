@@ -42,7 +42,7 @@ function RegisterForm() {
     }
 
     try {
-      const response = await fetch(DEFAULT_URL + "/api/auth/register", {
+      const response = await fetch(DEFAULT_URL + "api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

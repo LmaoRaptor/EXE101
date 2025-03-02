@@ -8,7 +8,6 @@ function LoginPage() {
   const handleSubmitForm = () => {
     toast.success("Login successful!");
     navigate("/");
-    sessionStorage.setItem("token", "pass");
   };
   return (
     <div
@@ -17,7 +16,7 @@ function LoginPage() {
         backgroundColor: "#f8ecdb",
       }}
     >
-      <LoginForm handleSubmitForm={handleSubmitForm} />
+      <LoginForm handleLoginSuccess={handleSubmitForm} />
       <img src="../public/img/login.png" alt="" />
     </div>
   );

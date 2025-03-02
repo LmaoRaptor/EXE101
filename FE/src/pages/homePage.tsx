@@ -38,13 +38,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="flex justify-center items-end gap-4 mt-6">
-          <div className="h-80 w-72 rounded-3xl bg-green-950">
-            <img
-              className="size-full object-cover rounded-2xl"
-              src="https://fact-depot.com/media/product/55363/Chau-nhua-trong-cay-2-day-PY-Tropical-2066-N-mau-nau-27.8-x-28cm-10-lit-.webp"
-              alt=""
-            />
-          </div>
+          <div className="h-80 w-72 rounded-3xl bg-green-950"></div>
           <div>
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="text-gray-300">
@@ -61,36 +55,12 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex gap-4 items-end">
-              <div className="h-56 w-48 rounded-3xl border border-solid border-gray-300">
-                <img
-                  className="size-full object-cover rounded-2xl"
-                  src="https://product.hstatic.net/200000560101/product/img_6797_84396c9f0f014ef9bf2d5511af9fddf7_large.png"
-                  alt=""
-                />
-              </div>
-              <div className="h-36 w-48 bg-green-900 rounded-3xl">
-                <img
-                  className="size-full object-cover rounded-2xl"
-                  src="https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2021/07/lol-t1-1.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="h-56 w-48 bg-green-800 rounded-3xl">
-                <img
-                  className="size-full object-cover rounded-2xl"
-                  src="https://i.pinimg.com/736x/30/b5/49/30b54999b098050158ed13a1ecdcaab0.jpg"
-                  alt=""
-                />
-              </div>
+              <div className="h-56 w-48 bg-green-800 rounded-3xl"></div>
+              <div className="h-36 w-48 bg-green-900 rounded-3xl"></div>
+              <div className="h-56 w-48 bg-green-800 rounded-3xl"></div>
             </div>
           </div>
-          <div className="h-80 w-72 rounded-3xl bg-green-900">
-            <img
-              className="size-full object-cover rounded-2xl"
-              src="https://www.phucanh.vn/media/news/2312_laptop-moi-cua-lenovo-1.jpg"
-              alt=""
-            />
-          </div>
+          <div className="h-80 w-72 rounded-3xl bg-green-900"></div>
         </div>
       </div>
       <div>

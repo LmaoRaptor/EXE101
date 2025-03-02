@@ -30,7 +30,7 @@ const ProductItem: FC<ProductCardProps> = ({
       <h3 className="mt-4 text-xs font-bold text-gray-600">{brand}</h3>
       <p className="text-[12px] font-sm text-gray-400 mt-1">{title}</p>
       <div className="flex items-center mt-2">
-        <span className="text-lg font-semibold text-gray-800">{price}</span>
+        <span className="text-lg font-semibold text-gray-800">{price} vnđ</span>
       </div>
 
       <button
