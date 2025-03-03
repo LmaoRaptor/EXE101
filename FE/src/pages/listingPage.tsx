@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ProductItem from "../components/product/productItem";
 import { DEFAULT_URL } from "../settingHere";
+import { Spin } from "antd";
 
 const oldProducts = [
   {
@@ -340,15 +341,19 @@ const oldProducts = [
 
 const ListingPage = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Thêm trạng thái loading
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true); // Bắt đầu loading
         const response = await fetch(DEFAULT_URL + "api/post");
         const data = await response.json();
-        setProducts([...data, ...oldProducts]);
+        setProducts([...oldProducts, ...data]); // Cập nhật sản phẩm
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false); // Kết thúc loading
       }
     };
 
@@ -358,21 +363,27 @@ const ListingPage = () => {
   return (
     <div className="flex mt-20 gap-8 mb-20">
       {/* <FilterSection /> */}
-      <div className="w-4/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <ProductItem
-            idProduct={product.id as any}
-            key={product.id}
-            brand={product.description}
-            title={product.title}
-            price={product.price}
-            oldPrice={product.subCategoryName}
-            discount={product.status}
-            deliveryDate={product.createdAt}
-            imgSrc={product.mainImage}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center items-center w-full h-64">
+          <Spin size="large" style={{ color: "#008000" }} />
+        </div>
+      ) : (
+        <div className="w-4/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+          {products.map((product) => (
+            <ProductItem
+              idProduct={product.id}
+              key={product.id}
+              brand={product.description}
+              title={product.title}
+              price={product.price}
+              oldPrice={product.subCategoryName}
+              discount={product.status}
+              deliveryDate={product.createdAt}
+              imgSrc={product.mainImage}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -5,28 +5,28 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row lg:justify-between space-y-8 lg:space-y-0 gap-20">
           <div className="lg:w-2/5">
             <h2 className="text-2xl font-bold mb-4">
-              Join the movement and get exclusive deals, promotions, and updates
-              on your favorite brands
+              Hãy tham gia cùng Y.S để có thể tìm được những đồ vật bạn cần
+              thiết
             </h2>
             <div className="flex items-center space-x-2 mb-2 gap-4">
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Hãy nhập email"
                 className="p-2 w-full max-w-xs rounded-sm text-white outline-none  border-b border-white bg-transparent"
               />
               <button className="bg-green-700 text-white py-2 px-4 rounded-lg">
-                Submit
+                Nhập
               </button>
             </div>
             <p className="text-sm text-gray-300">
-              By submitting your email address, you agree to receive marketing
-              emails from Rivly, and accept our{" "}
+              Bằng cách gửi địa chỉ email của bạn, bạn đồng ý nhận email tiếp
+              thị từ Y.S và chấp nhận{" "}
               <a href="#" className="underline">
-                terms & conditions
+                điều khoản và điều kiện
               </a>{" "}
-              and{" "}
+              và{" "}
               <a href="#" className="underline">
-                privacy policy
+                chính sách bảo mật
               </a>
               .
             </p>
@@ -34,42 +34,37 @@ const Footer = () => {
 
           <div className="lg:w-3/5 grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-8 text-sm">
             <div>
-              <h3 className="font-semibold mb-2">Shop</h3>
+              <h3 className="font-semibold mb-2">Cửa hàng</h3>
               <ul className="space-y-1">
                 <li>
-                  <a href="#" className="hover:underline">
-                    Homepage
+                  <a href="/" className="hover:underline">
+                    Trang chủ
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Shopper Community
+                    Messeger
                   </a>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">About</h3>
+              <h3 className="font-semibold mb-2">Về</h3>
               <ul className="space-y-1">
                 <li>
                   <a href="#" className="hover:underline">
-                    Our Mission
+                    Nhiệm Vụ
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Careers
+                    Sự nghiệp
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Partnerships
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Press
+                    Đồng hành
                   </a>
                 </li>
                 <li>
@@ -79,7 +74,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Articles
+                    Tác giả
                   </a>
                 </li>
               </ul>
@@ -90,17 +85,17 @@ const Footer = () => {
               <ul className="space-y-1">
                 <li>
                   <a href="#" className="hover:underline">
-                    Contact Seller
+                    Trao đổi
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Orders & Returns
+                    Mua bán
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Help Center & FAQ
+                    Trung tâm hỗ trợ & FAQ
                   </a>
                 </li>
               </ul>

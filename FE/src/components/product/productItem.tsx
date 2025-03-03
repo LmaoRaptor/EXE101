@@ -21,7 +21,12 @@ const ProductItem: FC<ProductCardProps> = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div className="border border-gray-200 rounded-lg p-4 shadow-sm text-left">
+    <div className="border border-gray-200 rounded-lg p-4 shadow-sm text-left relative">
+      <img
+        src="../public/img/1.png"
+        alt=""
+        className="absolute h-[55px] left-[30px] top-[-30px]"
+      />
       <img
         src={imgSrc}
         alt={title}
@@ -32,13 +37,22 @@ const ProductItem: FC<ProductCardProps> = ({
       <div className="flex items-center mt-2">
         <span className="text-lg font-semibold text-gray-800">{price} vnđ</span>
       </div>
-
+      <img
+        src="../public/img/4.png"
+        alt=""
+        className="absolute h-[55px] right-[60px] bottom-[70px]"
+      />
       <button
         className="mt-4 w-full text-black border border-green-900 py-2 rounded-md hover:bg-green-900 hover:text-white transition"
         onClick={() => navigate(`/products/${idProduct}`)}
       >
         Mua ngay
       </button>
+      <img
+        src="../public/img/2.png"
+        alt=""
+        className="absolute h-[55px] right-[-30px] bottom-[100px]"
+      />
     </div>
   );
 };
