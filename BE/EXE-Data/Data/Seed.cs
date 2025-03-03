@@ -12,14 +12,15 @@ namespace EXE_Data.Data
 		}
 		public static void Seed(AppDBContext context, UserManager<User> userManager)
 		{
-			var admin = new User { Id = Ulid.NewUlid(), UserName = "admin", Email = "admin@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 10, Status = EnumType.UserStatusEnum.Customer };
-			var vinh = new User { Id = Ulid.NewUlid(), UserName = "vinh", Email = "vinh@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 1, Status = EnumType.UserStatusEnum.Customer };
-			var tien = new User { Id = Ulid.NewUlid(), UserName = "tien", Email = "tien@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 2, Status = EnumType.UserStatusEnum.Customer };
-			var cuong = new User { Id = Ulid.NewUlid(), UserName = "cuong", Email = "cuong@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 9, Status = EnumType.UserStatusEnum.Customer };
+			var admin = new User { Id = Ulid.NewUlid(), UserName = "admin", Email = "admin@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 10, Status = EnumType.UserStatusEnum.Active };
+			var vinh = new User { Id = Ulid.NewUlid(), UserName = "vinh", Email = "vinh@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 1, Status = EnumType.UserStatusEnum.Active };
+			var tien = new User { Id = Ulid.NewUlid(), UserName = "tien", Email = "tien@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 2, Status = EnumType.UserStatusEnum.Active };
+			var cuong = new User { Id = Ulid.NewUlid(), UserName = "cuong", Email = "cuong@gmail.com", PhoneNumber = "1234567890", CreatedAt = DateTime.Now, Level = 9, Status = EnumType.UserStatusEnum.Active };
 
 			var roles = new List<Role>(){
 				new Role { Id = Ulid.NewUlid(), Name = "Admin", NormalizedName = "ADMIN" },
 				new Role { Id = Ulid.NewUlid(), Name = "User", NormalizedName = "USER" },
+				new Role { Id = Ulid.NewUlid(), Name = "Premium", NormalizedName = "PREMIUM" },
 			};
 			if(!context.Roles.Any())
 			{

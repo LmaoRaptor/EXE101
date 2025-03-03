@@ -5,5 +5,6 @@ namespace EXE_Bussiness.Service.UserService
 	public interface IUserService
 	{
 		Task<List<UserDTO>> GetAll();
+		Task<bool> UpgradeAccount(Ulid id);
 	}
 }

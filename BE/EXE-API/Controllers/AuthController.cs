@@ -44,7 +44,7 @@ namespace EXE_API.Controllers
 			}
 			var token = await _tokenService.CreateTokenAsync(user);
 			var refresh = _tokenService.CreateRefreshToken();
-
+			var roles = await _userManager.GetRolesAsync(user);
 
 			//user.RefreshToken = refresh;
 			//user.TokenExpiry = DateTime.UtcNow.AddMonths(1);
@@ -53,6 +53,7 @@ namespace EXE_API.Controllers
 			return Ok(new LoginResponse()
 			{
 				UserName = user.UserName,
+				Role = roles.ToList(),
 				Token = new JwtSecurityTokenHandler().WriteToken(token),
 				Expired = (long)token.ValidTo.Subtract(DateTime.UtcNow).TotalSeconds,
 				ExpiredAt = token.ValidTo,
@@ -67,11 +68,6 @@ namespace EXE_API.Controllers
 		{
 			if(!ModelState.IsValid)
 			{
-				return BadRequest(ModelState);
-			}
-			if(register.Password != register.ConfirmPassword)
-			{
-				ModelState.AddModelError("error", "Password not match");
 				return BadRequest(ModelState);
 			}
 			var exist = await _userManager.FindByEmailAsync(register.Email);
@@ -90,7 +86,7 @@ namespace EXE_API.Controllers
 				UpdatedAt = DateTime.Now,
 				IsSaler = false,
 				Level = 0,
-				Status = UserStatusEnum.Customer
+				Status = UserStatusEnum.Active
 
 			};
 			var result = await _userManager.CreateAsync(user, register.Password);

@@ -1,4 +1,6 @@
 ﻿using EXE_Bussiness.Service.UserService;
+using EXE_Data.Data;
+using EXE_Data.Data.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +14,11 @@ namespace EXE_API.Controllers
 	public class UserController : ControllerBase
 	{
 		IUserService _userService;
-		public UserController(IUserService userService)
+		AppDBContext _context;
+		public UserController(IUserService userService, AppDBContext context)
 		{
 			_userService = userService;
+			_context = context;
 		}
 		// GET: api/<UserController>
 		[HttpGet]
@@ -23,11 +27,15 @@ namespace EXE_API.Controllers
 			return Ok(await _userService.GetAll());
 		}
 
-		// GET api/<UserController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
+		[HttpGet("add-roles")]
+		public async Task<IActionResult> AddRoles()
 		{
-			return "value";
+			var users = _context.Users.ToList();
+			foreach(var user in users)
+			{
+				var isdone = await _userService.UpgradeAccount(user.Id);
+			}
+			return Ok("Done");
 		}
 
 		// POST api/<UserController>
