@@ -9,9 +9,16 @@ type ProductCardProps = {
   discount?: string;
   deliveryDate: string;
   imgSrc: string;
+  idProduct: string;
 };
 
-const ProductItem: FC<ProductCardProps> = ({ brand, title, price, imgSrc }) => {
+const ProductItem: FC<ProductCardProps> = ({
+  brand,
+  title,
+  price,
+  imgSrc,
+  idProduct,
+}) => {
   const navigate = useNavigate();
   return (
     <div className="border border-gray-200 rounded-lg p-4 shadow-sm text-left">
@@ -23,14 +30,14 @@ const ProductItem: FC<ProductCardProps> = ({ brand, title, price, imgSrc }) => {
       <h3 className="mt-4 text-xs font-bold text-gray-600">{brand}</h3>
       <p className="text-[12px] font-sm text-gray-400 mt-1">{title}</p>
       <div className="flex items-center mt-2">
-        <span className="text-lg font-semibold text-gray-800">{price}</span>
+        <span className="text-lg font-semibold text-gray-800">{price} vnđ</span>
       </div>
 
       <button
         className="mt-4 w-full text-black border border-green-900 py-2 rounded-md hover:bg-green-900 hover:text-white transition"
-        onClick={() => navigate("/products/1")}
+        onClick={() => navigate(`/products/${idProduct}`)}
       >
-        Buy Now
+        Mua ngay
       </button>
     </div>
   );

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Form,
   Input,
@@ -11,6 +13,20 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DEFAULT_URL } from "../settingHere";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
+const REGION = import.meta.env.VITE_REGION;
+const BUCKET_NAME = import.meta.env.VITE_BUCKET_NAME;
+const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
+const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+
+const s3Client = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_KEY,
+  },
+});
 
 const buttonStyle = {
   backgroundColor: "#14532d", // bg-green-900
@@ -26,16 +42,60 @@ const buttonHoverStyle = {
 };
 
 const descriptions = [
-  "🔥 {title} - Chỉ với ${price}! Sản phẩm chất lượng, giá tốt, nhanh tay sở hữu ngay!",
-  "💥 Ưu đãi sốc! {title} chỉ còn ${price}, cơ hội vàng cho bạn!",
-  "🚀 Mua ngay {title} với giá chỉ ${price}, chất lượng đảm bảo, đừng bỏ lỡ!",
-  "🎯 Đặc biệt {title} đang giảm giá còn ${price}, mua ngay kẻo hết!",
-  "✨ Sản phẩm hot {title} giá siêu tốt ${price}, nhanh tay đặt ngay!",
+  "Qua nhanh! Còn đúng 1 slot cho {title}, giá chỉ ${price}! Ai nhanh tay thì có ngay, chậm là tiếc cả đời!",
+  "Pass gấp! {title} giá cực hời ${price}, chỉ ưu tiên người chốt nhanh!",
+  "Giảm sốc! {title} cần pass ngay, giá ${price}, fix nhẹ cho ai qua liền tay!",
+  "Chốt đơn ngay! {title} giá chỉ ${price}, còn đúng 1 chiếc, không nhanh là hết!",
+  "Còn đúng 1 suất! {title} giá đẹp ${price}, fix nhẹ cho ai qua liền!",
+  "Nhanh tay kẻo lỡ! {title} cần pass giá ${price}, ưu tiên chốt ngay, không giữ slot!",
+  "Giá đẹp nhất thị trường! {title} chỉ còn ${price}, cần người rước ngay!",
+  "Pass nhanh trong hôm nay! {title} chỉ còn ${price}, không để lâu!",
+  "Ai cần chốt lẹ! {title} giá ${price}, fix nhẹ cho ai qua ngay trong ngày!",
+  "Pass lại giá hời! {title} chỉ còn ${price}, ai qua trước lấy trước!",
+  "Hàng hot, pass gấp! {title} giá ${price}, không nhanh là bay!",
+  "Chỉ còn 1 slot duy nhất! {title} giá cực tốt ${price}, chốt ngay!",
+  "Để lại giá mềm! {title} chỉ ${price}, không giữ chỗ, ai nhanh có!",
+  "Fix mạnh cho người chốt nhanh! {title} giá ${price}, qua ngay!",
+  "Qua lẹ không tiếc! {title} pass giá tốt ${price}, không fix nhiều, nhanh tay!",
+  "Ai chốt nhanh có quà! {title} chỉ còn ${price}, qua lấy liền!",
+  "Mất cơ hội là tiếc! {title} giá quá rẻ ${price}, chỉ pass trong hôm nay!",
+  "Săn ngay deal pass cực hời! {title} giá ${price}, ai qua chốt lẹ!",
+  "Pass rẻ hơn siêu sale! {title} chỉ ${price}, fix nhiệt tình cho người qua nhanh!",
+  "Qua ngay trong 1 nốt nhạc! {title} pass giá ${price}, không nhanh là bay!",
 ];
 
 const CreatePage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [imageUrls, setImageUrls] = useState([]);
+
+  const handleUpload = async ({ file, onSuccess, onError }) => {
+    console.log("pass");
+    const fileName = `${Date.now()}-${file.name}`;
+    try {
+      const fileBuffer = await file.arrayBuffer(); // Chuyển thành ArrayBuffer
+      const fileUint8Array = new Uint8Array(fileBuffer); // Chuyển thành Uint8Array
+
+      const uploadParams = {
+        Bucket: BUCKET_NAME,
+        Key: fileName,
+        Body: fileUint8Array, // Sử dụng Uint8Array thay vì file trực tiếp
+        ContentType: file.type,
+      };
+      await s3Client.send(new PutObjectCommand(uploadParams));
+      // URL của ảnh sau khi upload thành công
+      //const imageUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`;
+      //console.log(imageUrl);
+      //setImageUrls((prev) => [...prev, imageUrl]);
+      //onSuccess(imageUrl);
+      message.success("Upload thành công!");
+    } catch (error) {
+      console.error("Upload failed:", error);
+      onError(error);
+      message.error("Upload thất bại!");
+    }
+  };
 
   const onFinish = async (values) => {
     try {
@@ -59,6 +119,7 @@ const CreatePage = () => {
       if (response.ok) {
         message.success("Item created successfully!");
         form.resetFields();
+        navigate("/products");
       } else {
         message.error("Failed to create item.");
       }
@@ -80,7 +141,7 @@ const CreatePage = () => {
           .replace("${price}", price);
         form.setFieldsValue({ description: randomDescription });
         setLoading(false);
-      }, 1000);
+      }, 3000);
     }
   };
 
@@ -112,7 +173,11 @@ const CreatePage = () => {
         </div>
 
         <Form.Item label="Upload Images" name="images">
-          <Upload listType="picture-card" maxCount={4}>
+          <Upload
+            customRequest={handleUpload}
+            listType="picture-card"
+            maxCount={4}
+          >
             <Button icon={<UploadOutlined />}></Button>
           </Upload>
         </Form.Item>
