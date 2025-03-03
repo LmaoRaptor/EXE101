@@ -3,6 +3,7 @@ using EXE_Bussiness.Service.PostService;
 using EXE_Data.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace EXE_API.Controllers
@@ -64,7 +65,6 @@ namespace EXE_API.Controllers
 			{
 				return BadRequest("User can not sell");
 			}
-
 			await _postService.CreatePost(postCreate, user);
 			return Ok();
 		}

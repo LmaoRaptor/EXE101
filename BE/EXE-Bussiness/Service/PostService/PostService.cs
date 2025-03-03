@@ -5,6 +5,7 @@ using EXE_Bussiness.Model.UserModel;
 using EXE_Bussiness.Service.ImageService;
 using EXE_Data.Data;
 using EXE_Data.Data.Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -17,13 +18,15 @@ namespace EXE_Bussiness.Service.PostService
 		private readonly IMapper _mapper;
 		private readonly ILogger<PostService> _logger;
 		private readonly IImageService _imageSerivce; 
+		private readonly UserManager<User> _userManager;
 
-		public PostService(AppDBContext context, IMapper mapper, ILogger<PostService> logger, IImageService imageSerivce)
+		public PostService(AppDBContext context, IMapper mapper, ILogger<PostService> logger, IImageService imageSerivce, UserManager<User> userManager)
 		{
 			_mapper = mapper;
 			_context = context;
 			_logger = logger;
 			_imageSerivce = imageSerivce;
+			_userManager = userManager;
 		}
 
 		public async Task CreatePost(PostCreateRequest postCreate, User user)
@@ -36,7 +39,8 @@ namespace EXE_Bussiness.Service.PostService
 			post.Status = EXE_Data.Data.EnumType.PostStatusEnum.New;
 			var subCategory = await _context.SubCategories.FindAsync(Ulid.Parse(postCreate.SubCategoryId));
 			post.CategoryId = subCategory.CategoryId;
-			if(user.Status != EXE_Data.Data.EnumType.UserStatusEnum.Premium)
+			var role = await _userManager.GetRolesAsync(user);
+			if(!role.Contains("Premium"))
 			{
 				user.IsSaler = false;
 			}

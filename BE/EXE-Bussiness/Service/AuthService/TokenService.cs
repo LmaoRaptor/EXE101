@@ -25,7 +25,8 @@ namespace EXE_Bussiness.Service.TokenService
 			var roles = await _userManager.GetRolesAsync(user);
 			var claims = new List<Claim>
 			{
-				new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+				new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+				new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 			};
 			claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
