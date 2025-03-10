@@ -6,10 +6,12 @@ import { CloseOutlined } from "@ant-design/icons";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(true); // Mở modal khi load trang
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    setIsModalOpen(true);
+    setTimeout(() => {
+      setIsModalOpen(true);
+    }, 3000);
   }, []);
 
   return (

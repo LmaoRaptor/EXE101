@@ -341,19 +341,33 @@ const oldProducts = [
 
 const ListingPage = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // Thêm trạng thái loading
+  const [loading, setLoading] = useState(true);
+
+  const [isUserRole, setIsUserRole] = useState(false);
 
   useEffect(() => {
+    const sessionData = sessionStorage.getItem("userToken");
+    if (sessionData) {
+      try {
+        const parsedData = JSON.parse(sessionData);
+        if (parsedData.role.includes("User")) {
+          setIsUserRole(true);
+        }
+      } catch (error) {
+        console.error("Error parsing sessionStorage:", error);
+      }
+    }
+
     const fetchProducts = async () => {
       try {
-        setLoading(true); // Bắt đầu loading
+        setLoading(true);
         const response = await fetch(DEFAULT_URL + "api/post");
         const data = await response.json();
-        setProducts([...oldProducts, ...data]); // Cập nhật sản phẩm
+        setProducts([...oldProducts, ...data]);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoading(false); // Kết thúc loading
+        setLoading(false);
       }
     };
 
@@ -369,8 +383,9 @@ const ListingPage = () => {
         </div>
       ) : (
         <div className="w-4/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <ProductItem
+              isHide={isUserRole && index > 2}
               idProduct={product.id}
               key={product.id}
               brand={product.description}

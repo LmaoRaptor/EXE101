@@ -4,6 +4,8 @@ import { MessageOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const userToken = sessionStorage.getItem("userToken");
+  const parsedData = JSON.parse(userToken);
   return (
     <div className="flex gap-4">
       <img
@@ -72,20 +74,49 @@ const Navbar = () => {
           <li>Chuột máy tính</li>
         </ul>
       </div>
-      <div className="h-10 bg-green-900 rounded-lg text-white uppercase flex items-center justify-center font-medium text-[14px] pl-3 pr-3">
-        Premium
-      </div>
-      <div
-        className="h-10 bg-green-900 rounded-lg text-white uppercase 
+
+      {parsedData?.role.includes("User") ? (
+        <div
+          className="h-10 bg-green-900 rounded-lg text-white uppercase 
       flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
       whitespace-nowrap cursor-pointer"
-        onClick={() => navigate("/create")}
-      >
-        Đăng đồ
-      </div>
+          onClick={() => navigate("/payment")}
+        >
+          Nâng cấp
+        </div>
+      ) : (
+        <div
+          className="h-10 bg-green-900 rounded-lg text-white uppercase 
+      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+      whitespace-nowrap cursor-pointer"
+        >
+          Premium
+        </div>
+      )}
+
+      {userToken ? (
+        <div
+          className="h-10 bg-green-900 rounded-lg text-white uppercase 
+      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+      whitespace-nowrap cursor-pointer"
+          onClick={() => navigate("/create")}
+        >
+          Đăng đồ
+        </div>
+      ) : (
+        <div
+          className="h-10 bg-green-900 rounded-lg text-white uppercase 
+      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+      whitespace-nowrap cursor-pointer"
+          onClick={() => navigate("/login")}
+        >
+          Đăng nhập
+        </div>
+      )}
+
       <UserDropdown />
       <a
-        href="https://www.facebook.com/profile.php?id=61572443900116" // Thay bằng link Messenger của bạn
+        href="https://www.facebook.com/profile.php?id=61572443900116"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
