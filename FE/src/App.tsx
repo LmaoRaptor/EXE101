@@ -16,6 +16,8 @@ import { ToastContainer } from "react-toastify";
 import CreatePage from "./pages/createPage";
 import PaymentPage from "./pages/paymentPage";
 import BlogPage from "./pages/blogPage";
+import ErrorBoundary from "./components/error/ErrorPage";
+import NotFoundPage from "./components/error/ErrorPage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -34,6 +36,7 @@ function AppWrapper() {
               <Route path="/create" element={<CreatePage />} />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/blog" element={<BlogPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
           <Footer />

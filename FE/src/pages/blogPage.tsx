@@ -55,10 +55,7 @@ const BlogPage = () => {
           {(index + 1) % 3 === 0 && (
             <div className="mb-8">
               <div className="bg-blue-500 text-white text-center p-4">
-                <p>
-                  Quảng cáo: Khám phá các sản phẩm tái chế độc đáo tại cửa hàng
-                  của chúng tôi!
-                </p>
+                <p>Quảng cáo: Liên hệ thuê quảng cáo với chúng tôi nhé</p>
               </div>
             </div>
           )}
