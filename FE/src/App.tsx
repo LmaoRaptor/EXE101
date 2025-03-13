@@ -16,8 +16,8 @@ import { ToastContainer } from "react-toastify";
 import CreatePage from "./pages/createPage";
 import PaymentPage from "./pages/paymentPage";
 import BlogPage from "./pages/blogPage";
-import ErrorBoundary from "./components/error/ErrorPage";
 import NotFoundPage from "./components/error/ErrorPage";
+import GoogleAnalytics from "./utils/googleAnalytics";
 
 function AppWrapper() {
   const location = useLocation();
@@ -53,6 +53,7 @@ function AppWrapper() {
 export default function App() {
   return (
     <Router>
+      <GoogleAnalytics />
       <ToastContainer />
       <AppWrapper />
     </Router>
