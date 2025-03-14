@@ -1,4 +1,5 @@
-﻿using EXE_Bussiness.Service.UserService;
+﻿using EXE_Bussiness.Model.UserModel;
+using EXE_Bussiness.Service.UserService;
 using EXE_Data.Data;
 using EXE_Data.Data.Entity;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,6 @@ namespace EXE_API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize(Policy = "Admin")]
 	public class UserController : ControllerBase
 	{
 		IUserService _userService;
@@ -28,33 +28,34 @@ namespace EXE_API.Controllers
 		}
 
 		[HttpGet("add-roles")]
-		public async Task<IActionResult> AddRoles()
+		public async Task<IActionResult> AddRoles(string email)
 		{
-			var users = _context.Users.ToList();
-			foreach(var user in users)
-			{
-				var isdone = await _userService.UpgradeAccount(user.Id);
-			}
+			var id = _context.Users.FirstOrDefault(x => x.Email == email).Id;
+			await _userService.UpgradeAccount(id);
 			return Ok("Done");
 		}
 
 		// POST api/<UserController>
-		[HttpPost]
-		public void Post([FromBody] string value)
+		[HttpPost("role")]
+		public async Task<IActionResult> AddRole([FromBody] string value)
 		{
+			await _userService.AddRole(value);
+			return Ok("Done");
 		}
 
 		// PUT api/<UserController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		[HttpPost("add-to-role")]
+		public async Task<IActionResult> AddToRole([FromBody]AddUserToRoleRequest req)
 		{
+			var result = await _userService.AddUserToRole(req.RoleName, req.Email);
+			return Ok(result);
 		}
 
 		// DELETE api/<UserController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
+		//[HttpDelete("{id}")]
+		//public void Delete(int id)
+		//{
 
-		}
+		//}
 	}
 }

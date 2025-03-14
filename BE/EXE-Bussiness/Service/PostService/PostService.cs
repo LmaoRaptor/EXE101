@@ -40,7 +40,7 @@ namespace EXE_Bussiness.Service.PostService
 			var subCategory = await _context.SubCategories.FindAsync(Ulid.Parse(postCreate.SubCategoryId));
 			post.CategoryId = subCategory.CategoryId;
 			var role = await _userManager.GetRolesAsync(user);
-			if(!role.Contains("Premium"))
+			if(!role.Contains("Premium") || !role.Contains("pre2") || !role.Contains("pre3"))
 			{
 				user.IsSaler = false;
 			}
@@ -193,7 +193,8 @@ namespace EXE_Bussiness.Service.PostService
 				"price" => posts.OrderBy(x => x.Price),
 				"price_desc" => posts.OrderByDescending(x => x.Price),
 				"created_at" => posts.OrderBy(x => x.CreatedAt),
-				"created_at_desc" => posts.OrderByDescending(x => x.CreatedAt)
+				"created_at_desc" => posts.OrderByDescending(x => x.CreatedAt),
+				_ => posts.OrderByDescending(x => x.CreatedAt)
 			};
 		}
 

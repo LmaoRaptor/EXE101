@@ -33,7 +33,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddDbContext<AppDBContext>(options =>
 {
-	options.UseMySQL(builder.Configuration.GetConnectionString("DeployConnection"));
+	options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddSingleton(new MapperConfiguration(config =>
@@ -79,7 +79,9 @@ builder.Services.AddAuthorization(options =>
 {
 	options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 	options.AddPolicy("User", policy => policy.RequireRole("User"));
-	options.AddPolicy("Saler", policy => policy.RequireRole("Saler"));
+	options.AddPolicy("Premium", policy => policy.RequireRole("PREMIUM"));
+	options.AddPolicy("Pre2", policy => policy.RequireRole("pre2"));
+	options.AddPolicy("Pre3", policy => policy.RequireRole("pre3"));
 });
 
 // Dependency Injection

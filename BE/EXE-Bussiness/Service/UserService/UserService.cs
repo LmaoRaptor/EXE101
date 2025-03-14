@@ -42,5 +42,45 @@ namespace EXE_Bussiness.Service.UserService
 			_logger.LogInformation("User upgraded to premium");
 			return true;
 		}
+
+		public async Task AddRole(string roleName)
+		{
+			Role role = new Role
+			{
+				Name = roleName,
+				NormalizedName = roleName.ToUpper(),
+				Id = Ulid.NewUlid()
+			};
+			_context.Roles.Add(role);
+			await _context.SaveChangesAsync();
+			_logger.LogInformation("Role added successfully");
+		}
+
+		public async Task<string> AddUserToRole(string roleName, string email)
+		{
+			var user = await _userManager.FindByEmailAsync(email);
+			if(user == null)
+			{
+				_logger.LogError("User not found");
+				return "User not found";
+			}
+			var role = await _context.Roles.FirstOrDefaultAsync(x => x.Name == roleName);
+			if(role == null)
+			{
+				_logger.LogError("Role not found");
+				return "Role not found";
+			}
+			var roles = await _userManager.GetRolesAsync(user);
+			if (roles.Contains(roleName))
+			{
+				_logger.LogError("User already have this role");
+				return "User already have this role";
+			}
+			user.IsSaler = true;
+			var result = await _userManager.AddToRoleAsync(user, roleName);
+			_context.SaveChanges();
+			_logger.LogInformation("Role added successfully");
+			return "Role added successfully";
+		}
 	}
 }

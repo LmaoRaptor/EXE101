@@ -6,5 +6,7 @@ namespace EXE_Bussiness.Service.UserService
 	{
 		Task<List<UserDTO>> GetAll();
 		Task<bool> UpgradeAccount(Ulid id);
+		Task AddRole(string roleName);
+		Task<string> AddUserToRole(string roleName, string email);
 	}
 }

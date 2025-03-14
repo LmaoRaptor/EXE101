@@ -6,6 +6,7 @@ using EXE_Data.Data.EnumType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace EXE_API.Controllers
@@ -100,6 +101,54 @@ namespace EXE_API.Controllers
 			return Ok();
 		}
 
+		[HttpPost]
+		[Route("adduser")]
+		[AllowAnonymous]
+		public async Task<IActionResult> AddRangeUser([FromBody] List<string> email)
+		{
+			Stopwatch stopwatch = Stopwatch.StartNew(); // Start timer
+
+			if(!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			foreach(var item in email)
+			{
+				var exist = await _userManager.FindByEmailAsync(item);
+				if(exist != null)
+				{
+					Console.WriteLine($"Email {item} already exists");
+					continue;
+				}
+
+				var id = Ulid.NewUlid();
+				var user = new User()
+				{
+					Id = id,
+					UserName = $"user_{id.ToString().ToLower()}",
+					Email = item,
+					CreatedAt = DateTime.Now.AddDays(-20),
+					UpdatedAt = DateTime.Now,
+					IsSaler = false,
+					Level = 0,
+					Status = UserStatusEnum.Active
+				};
+
+				var result = await _userManager.CreateAsync(user, "123");
+				if(!result.Succeeded)
+				{
+					foreach(var error in result.Errors)
+						ModelState.AddModelError("error", error.Description);
+					return BadRequest(ModelState);
+				}
+
+				await _userManager.AddToRoleAsync(user, "User");
+			}
+
+			stopwatch.Stop(); // Stop timer
+			return Ok(new { Message = "Users added successfully", TimeTaken = $"{stopwatch.Elapsed}" });
+		}
 
 		//[HttpPost]
 		//[Route("refresh")]
