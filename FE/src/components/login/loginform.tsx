@@ -54,8 +54,7 @@ function LoginForm({ handleLoginSuccess }: LoginFormProps) {
       }
 
       const data = await response.json();
-      console.log(data);
-      sessionStorage.setItem("userToken", data.userName);
+      sessionStorage.setItem("userToken", JSON.stringify(data));
       handleLoginSuccess();
     } catch (error: any) {
       setErrorMessage(error.message || "Login failed. Please try again.");

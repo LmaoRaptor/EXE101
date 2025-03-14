@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -14,6 +14,7 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import { DEFAULT_URL } from "../settingHere";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { toast } from "react-toastify";
 
 const REGION = import.meta.env.VITE_REGION;
 const BUCKET_NAME = import.meta.env.VITE_BUCKET_NAME;
@@ -69,9 +70,9 @@ const CreatePage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [imageUrls, setImageUrls] = useState([]);
+  const userToken = sessionStorage.getItem("userToken");
 
   const handleUpload = async ({ file, onSuccess, onError }) => {
-    console.log("pass");
     const fileName = `${Date.now()}-${file.name}`;
     try {
       const fileBuffer = await file.arrayBuffer(); // Chuyển thành ArrayBuffer
@@ -84,11 +85,9 @@ const CreatePage = () => {
         ContentType: file.type,
       };
       await s3Client.send(new PutObjectCommand(uploadParams));
-      // URL của ảnh sau khi upload thành công
-      //const imageUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`;
-      //console.log(imageUrl);
-      //setImageUrls((prev) => [...prev, imageUrl]);
-      //onSuccess(imageUrl);
+      const imageUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`;
+      setImageUrls((prev) => [...prev, imageUrl]);
+      onSuccess(imageUrl);
       message.success("Upload thành công!");
     } catch (error) {
       console.error("Upload failed:", error);
@@ -104,10 +103,10 @@ const CreatePage = () => {
         description: values.description,
         price: values.price,
         subCategoryId: "01JM9YHATZVS4GTDWE7PGPMQKN",
-        userId: "01JM9YGX6NJ9JW931MFDEZ06SA",
+        userId: JSON.parse(userToken).userName.replace("user_", ""),
         contactPhone: values.contactPhone,
         contactOther: values.alternativeContact,
-        images: ["fake-image"],
+        images: imageUrls,
       };
 
       const response = await fetch(DEFAULT_URL + "api/post/add", {
@@ -145,12 +144,32 @@ const CreatePage = () => {
     }
   };
 
+  useEffect(() => {
+    const userToken = sessionStorage.getItem("userToken");
+    if (!userToken) {
+      toast.warning("Hãy đăng nhập để trải nghiệm!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      navigate("/login");
+    }
+  }, [navigate]);
+
   return (
     <Card title="Đăng sản phẩm" style={{ margin: "50px auto" }}>
+      <img
+        src="../public/img/1.png"
+        alt=""
+        className="absolute h-[55px] left-[10px] top-0"
+      />
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <div style={{ display: "flex", gap: "10px", width: "100%" }}>
           <Form.Item
-            label="Title"
+            label="Tên sản phẩm"
             name="title"
             rules={[{ required: true, message: "Hãy nhập tên sản phẩm" }]}
             style={{ width: "50%" }}
@@ -159,7 +178,7 @@ const CreatePage = () => {
           </Form.Item>
 
           <Form.Item
-            label="Price ($)"
+            label="Giá sản phẩm(vnđ)"
             name="price"
             rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
             style={{ width: "50%" }}
@@ -167,12 +186,12 @@ const CreatePage = () => {
             <InputNumber
               min={0}
               style={{ width: "100%" }}
-              placeholder="Enter price"
+              placeholder="Nhập giá sản phẩm"
             />
           </Form.Item>
         </div>
 
-        <Form.Item label="Upload Images" name="images">
+        <Form.Item label="Đăng tải ảnh" name="images">
           <Upload
             customRequest={handleUpload}
             listType="picture-card"
@@ -197,40 +216,42 @@ const CreatePage = () => {
             onClick={generateDescription}
             disabled={loading}
           >
-            {loading ? <Spin /> : "Generate AI Description"}
+            {loading ? <Spin /> : "Khởi tạo chú thích với AI"}
           </Button>
         </Form.Item>
 
         <Form.Item
-          label="Description"
+          label="Chú thích sản phẩm"
           name="description"
-          rules={[{ required: true, message: "Please enter the description" }]}
+          rules={[
+            { required: true, message: "Hãy nhập chú thích về sản phẩm" },
+          ]}
         >
-          <Input.TextArea rows={4} placeholder="Enter description" />
+          <Input.TextArea rows={4} placeholder="Nhập chú thích về sản phẩm" />
         </Form.Item>
 
         <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
           <Form.Item
-            label="Contact Phone"
+            label="Số điện thoại liên lạc"
             name="contactPhone"
             style={{ flex: 1 }}
-            rules={[{ required: true, message: "Please enter contact phone" }]}
+            rules={[{ required: true, message: "Hãy nhập số điện thoại" }]}
           >
-            <Input placeholder="Enter contact phone" />
+            <Input placeholder="Hãy nhập số điện thoại" />
           </Form.Item>
 
           <Form.Item
-            label="Alternative Contact"
+            label="Phương thức trao đổi khác"
             name="alternativeContact"
             style={{ flex: 1 }}
             rules={[
               {
                 required: true,
-                message: "Please enter alternative contact method",
+                message: "Hãy nhập phương thức trao đổi khác",
               },
             ]}
           >
-            <Input placeholder="Enter alternative contact" />
+            <Input placeholder="Nhập phương thức trao đổi khác" />
           </Form.Item>
         </div>
 
@@ -248,7 +269,7 @@ const CreatePage = () => {
               (e.target.style.backgroundColor = buttonStyle.backgroundColor)
             }
           >
-            Create
+            Tạo bài viết
           </Button>
         </Form.Item>
       </Form>

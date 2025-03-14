@@ -29,35 +29,35 @@ const SliderProduct = ({ isHeading = false }: Props) => {
         <div className="pr-4 mr-[-1rem]">
           <img
             className="w-full object-cover rounded-2xl h-96 shadow-lg"
-            src="https://cdn.tgdd.vn/Files/2019/10/30/1213974/nguyen-ly-hoat-dong-cua-may-anh-co-the-ban-chua-biet.jpg"
+            src="https://product.hstatic.net/200000664119/product/analog_house_may_anh_lay_lien_instax_mini_12_thumbnail_93a931065a3a4ab3b2fe4b8a4618fd68.jpg"
             alt="Slide 1"
           />
         </div>
         <div className="pr-4 mr-[-1rem]">
           <img
             className="w-full object-cover rounded-2xl h-96 shadow-lg"
-            src="https://cdn.tgdd.vn/Products/Images/44/325242/dell-inspiron-15-3520-i5-n5i5052w1-thumb-600x600.jpg"
+            src="https://product.hstatic.net/1000312752/product/ystu063-1v__1__f837d90830864b848bb2f32e8ac077da_master.jpg"
             alt="Slide 2"
           />
         </div>
         <div className="pr-4 mr-[-1rem]">
           <img
             className="w-full object-cover rounded-2xl h-96 shadow-lg"
-            src="https://bizweb.dktcdn.net/100/412/747/products/fornix-ft26-trang.jpg?v=1696236458200"
+            src="https://www.tncstore.vn/media/product/8917-chuot-may-tinh-khong-day-monsgeek-d1-black-1.jpeg"
             alt="Slide 3"
           />
         </div>
         <div className="pr-4 mr-[-1rem]">
           <img
             className="w-full object-cover rounded-2xl h-96 shadow-lg"
-            src="https://nvs.tn-cdn.net/2022/01/0dea9651447c4d44927dee801583fcb0.png"
+            src="https://sonysl.vn/wp-content/uploads/2021/01/Son-YSL-85.png"
             alt="Slide 4"
           />
         </div>
         <div className="pr-4 mr-[-1rem]">
           <img
             className="w-full object-cover rounded-2xl h-96 shadow-lg"
-            src="https://minhancomputercdn.com/media/product/5397_chu___t_m__y_t__nh_logitech_gaming_g102_gen_2__black__02.jpg"
+            src="https://hidosport.vn/wp-content/uploads/2024/06/qua-bong-da-euro-2024-so-5-1.webp"
             alt="Slide 5"
           />
         </div>
