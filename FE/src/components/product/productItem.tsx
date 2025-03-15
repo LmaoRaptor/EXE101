@@ -45,7 +45,9 @@ const ProductItem: FC<ProductCardProps> = ({
       >
         {brand}
       </h3>
-      <p className="text-[12px] font-sm text-gray-400 mt-1">{title}</p>
+      <p className="text-[12px] font-sm text-gray-400 mt-1 line-clamp-1">
+        {title}
+      </p>
       <div className="flex items-center mt-2">
         <span className="text-lg font-semibold text-gray-800">
           {price.toLocaleString("vi-VN")} vnđ
