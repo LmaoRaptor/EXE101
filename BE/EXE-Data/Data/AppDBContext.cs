@@ -10,6 +10,7 @@ namespace EXE_Data.Data
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<SubCategory> SubCategories { get; set; }
 		public DbSet<Image> Images { get; set; }
+		public DbSet<Payment> Payments { get; set; }
 
 		public AppDBContext(DbContextOptions options) : base(options)
 		{

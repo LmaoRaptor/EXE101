@@ -28,5 +28,24 @@ namespace EXE_API.Controllers
 			return Ok("Image added");
 		}
 
+		[HttpGet("all")]
+		public IActionResult GetAllImages()
+		{
+			return Ok(_context.Images);
+		}
+
+		[HttpDelete("delete/{id}")]
+		public IActionResult DeleteImage(string id)
+		{
+			var image = _context.Images.Find(Ulid.Parse(id));
+			if(image == null)
+			{
+				return NotFound("Image not found");
+			}
+			_context.Images.Remove(image);
+			_context.SaveChanges();
+			return Ok("Image deleted");
+		}
+
 	}
 }

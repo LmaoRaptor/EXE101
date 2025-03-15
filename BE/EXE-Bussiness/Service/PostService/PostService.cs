@@ -40,12 +40,11 @@ namespace EXE_Bussiness.Service.PostService
 			var subCategory = await _context.SubCategories.FindAsync(Ulid.Parse(postCreate.SubCategoryId));
 			post.CategoryId = subCategory.CategoryId;
 			var role = await _userManager.GetRolesAsync(user);
-			if(!role.Contains("Premium"))
+			if(!role.Contains("pre1") && !role.Contains("pre2") && !role.Contains("pre3"))
 			{
 				user.IsSaler = false;
+				_context.Users.Update(user);
 			}
-
-			_context.Users.Update(user);
 			_context.Posts.Add(post);
 			var result = await _context.SaveChangesAsync() > 0;
 			if(result)
@@ -193,7 +192,8 @@ namespace EXE_Bussiness.Service.PostService
 				"price" => posts.OrderBy(x => x.Price),
 				"price_desc" => posts.OrderByDescending(x => x.Price),
 				"created_at" => posts.OrderBy(x => x.CreatedAt),
-				"created_at_desc" => posts.OrderByDescending(x => x.CreatedAt)
+				"created_at_desc" => posts.OrderByDescending(x => x.CreatedAt),
+				_ => posts.OrderByDescending(x => x.CreatedAt)
 			};
 		}
 
@@ -231,6 +231,28 @@ namespace EXE_Bussiness.Service.PostService
 					x.SubCategory.Name.Contains(search));
 			}
 			return posts;
+		}
+
+		public async Task<bool> UpdateStatus(Ulid id, int status)
+		{
+			var post = await _context.Posts.FindAsync(id);
+			if(post == null)
+			{
+				_logger.LogError("Post not found");
+				return false;
+			}
+			post.Status = (EXE_Data.Data.EnumType.PostStatusEnum)status;
+			_context.Posts.Update(post);
+			var result = await _context.SaveChangesAsync() > 0;
+			if(result)
+			{
+				_logger.LogInformation("Post updated successfully");
+			}
+			else
+			{
+				_logger.LogError("Post update failed");
+			}
+			return result;
 		}
 	}
 }

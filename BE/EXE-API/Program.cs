@@ -78,8 +78,10 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
 	options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-	options.AddPolicy("User", policy => policy.RequireRole("User"));
-	options.AddPolicy("Saler", policy => policy.RequireRole("Saler"));
+	options.AddPolicy("User", policy => policy.RequireRole("user"));
+	options.AddPolicy("Pre1", policy => policy.RequireRole("pre1"));
+	options.AddPolicy("Pre2", policy => policy.RequireRole("pre2"));
+	options.AddPolicy("Pre3", policy => policy.RequireRole("pre3"));
 });
 
 // Dependency Injection

@@ -20,7 +20,9 @@ namespace EXE_Data.Data
 			var roles = new List<Role>(){
 				new Role { Id = Ulid.NewUlid(), Name = "Admin", NormalizedName = "ADMIN" },
 				new Role { Id = Ulid.NewUlid(), Name = "User", NormalizedName = "USER" },
-				new Role { Id = Ulid.NewUlid(), Name = "Premium", NormalizedName = "PREMIUM" },
+				new Role { Id = Ulid.NewUlid(), Name = "Pre1", NormalizedName = "PRE1" },
+				new Role { Id = Ulid.NewUlid(), Name = "Pre2", NormalizedName = "PRE2" },
+				new Role { Id = Ulid.NewUlid(), Name = "Pre3", NormalizedName = "PRE3" },
 			};
 			if(!context.Roles.Any())
 			{

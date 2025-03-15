@@ -87,6 +87,23 @@ namespace EXE_API.Controllers
 
 		}
 
+		[HttpPut("{id}/change-status")]
+		public async Task<IActionResult> UpdateStatus(string id, int status)
+		{
+			Ulid ulid;
+			if(!Ulid.TryParse(id, out ulid) || !ModelState.IsValid)
+			{
+				return BadRequest("id not in format");
+			}
+			var result = await _postService.UpdateStatus(ulid, status);
+			if(!result)
+			{
+				return NotFound("Post not found");
+			}
+			return Ok();
+
+		}
+
 		// DELETE api/<PostController>/
 		[HttpDelete("{id}/delete")]
 		public async Task<IActionResult> DeleteById(string id)
