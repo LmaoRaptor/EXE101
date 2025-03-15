@@ -39,7 +39,7 @@ function AppWrapper() {
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/myproduct" element={<MyProductsPage />} />
-              <Route path="/update" element={<UpdatePage />} />
+              <Route path="/update/:id" element={<UpdatePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   Form,
@@ -13,21 +13,7 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DEFAULT_URL } from "../settingHere";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { toast } from "react-toastify";
-
-const REGION = import.meta.env.VITE_REGION;
-const BUCKET_NAME = import.meta.env.VITE_BUCKET_NAME;
-const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
-const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
-
-const s3Client = new S3Client({
-  region: REGION,
-  credentials: {
-    accessKeyId: ACCESS_KEY,
-    secretAccessKey: SECRET_KEY,
-  },
-});
 
 const buttonStyle = {
   backgroundColor: "#14532d", // bg-green-900
@@ -42,61 +28,14 @@ const buttonHoverStyle = {
   color: "white",
 };
 
-const descriptions = [
-  "Qua nhanh! Còn đúng 1 slot cho {title}, giá chỉ ${price}! Ai nhanh tay thì có ngay, chậm là tiếc cả đời!",
-  "Pass gấp! {title} giá cực hời ${price}, chỉ ưu tiên người chốt nhanh!",
-  "Giảm sốc! {title} cần pass ngay, giá ${price}, fix nhẹ cho ai qua liền tay!",
-  "Chốt đơn ngay! {title} giá chỉ ${price}, còn đúng 1 chiếc, không nhanh là hết!",
-  "Còn đúng 1 suất! {title} giá đẹp ${price}, fix nhẹ cho ai qua liền!",
-  "Nhanh tay kẻo lỡ! {title} cần pass giá ${price}, ưu tiên chốt ngay, không giữ slot!",
-  "Giá đẹp nhất thị trường! {title} chỉ còn ${price}, cần người rước ngay!",
-  "Pass nhanh trong hôm nay! {title} chỉ còn ${price}, không để lâu!",
-  "Ai cần chốt lẹ! {title} giá ${price}, fix nhẹ cho ai qua ngay trong ngày!",
-  "Pass lại giá hời! {title} chỉ còn ${price}, ai qua trước lấy trước!",
-  "Hàng hot, pass gấp! {title} giá ${price}, không nhanh là bay!",
-  "Chỉ còn 1 slot duy nhất! {title} giá cực tốt ${price}, chốt ngay!",
-  "Để lại giá mềm! {title} chỉ ${price}, không giữ chỗ, ai nhanh có!",
-  "Fix mạnh cho người chốt nhanh! {title} giá ${price}, qua ngay!",
-  "Qua lẹ không tiếc! {title} pass giá tốt ${price}, không fix nhiều, nhanh tay!",
-  "Ai chốt nhanh có quà! {title} chỉ còn ${price}, qua lấy liền!",
-  "Mất cơ hội là tiếc! {title} giá quá rẻ ${price}, chỉ pass trong hôm nay!",
-  "Săn ngay deal pass cực hời! {title} giá ${price}, ai qua chốt lẹ!",
-  "Pass rẻ hơn siêu sale! {title} chỉ ${price}, fix nhiệt tình cho người qua nhanh!",
-  "Qua ngay trong 1 nốt nhạc! {title} pass giá ${price}, không nhanh là bay!",
-];
-
 const UpdatePage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [imageUrls, setImageUrls] = useState([]);
   const userToken = sessionStorage.getItem("userToken");
   const parsedData = userToken ? JSON.parse(userToken) : null;
   const userRole = parsedData?.role?.[parsedData.role.length - 1];
-
-  const handleUpload = async ({ file, onSuccess, onError }) => {
-    const fileName = `${Date.now()}-${file.name}`;
-    try {
-      const fileBuffer = await file.arrayBuffer(); // Chuyển thành ArrayBuffer
-      const fileUint8Array = new Uint8Array(fileBuffer); // Chuyển thành Uint8Array
-
-      const uploadParams = {
-        Bucket: BUCKET_NAME,
-        Key: fileName,
-        Body: fileUint8Array, // Sử dụng Uint8Array thay vì file trực tiếp
-        ContentType: file.type,
-      };
-      await s3Client.send(new PutObjectCommand(uploadParams));
-      const imageUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`;
-      setImageUrls((prev) => [...prev, imageUrl]);
-      onSuccess(imageUrl);
-      message.success("Upload thành công!");
-    } catch (error) {
-      console.error("Upload failed:", error);
-      onError(error);
-      message.error("Upload thất bại!");
-    }
-  };
+  const [product, setProduct] = useState(null);
 
   const onFinish = async (values) => {
     try {
@@ -105,14 +44,11 @@ const UpdatePage = () => {
         description: values.description,
         price: values.price,
         subCategoryId: "01JM9YHATZVS4GTDWE7PGPMQKN",
-        userId: JSON.parse(userToken).userName.replace("user_", ""),
-        contactPhone: values.contactPhone,
-        contactOther: values.alternativeContact,
-        images: imageUrls,
+        status: product?.status === "New" ? "0" : "1",
       };
 
-      const response = await fetch(DEFAULT_URL + "api/post/add", {
-        method: "POST",
+      const response = await fetch(DEFAULT_URL + `api/post/${id}/update`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -129,22 +65,7 @@ const UpdatePage = () => {
     }
   };
 
-  const generateDescription = () => {
-    const title = form.getFieldValue("title");
-    const price = form.getFieldValue("price");
-    if (title && price) {
-      setLoading(true);
-      setTimeout(() => {
-        const randomDescription = descriptions[
-          Math.floor(Math.random() * descriptions.length)
-        ]
-          .replace("{title}", title)
-          .replace("${price}", price);
-        form.setFieldsValue({ description: randomDescription });
-        setLoading(false);
-      }, 3000);
-    }
-  };
+  const { id } = useParams();
 
   useEffect(() => {
     const userToken = sessionStorage.getItem("userToken");
@@ -160,6 +81,64 @@ const UpdatePage = () => {
       navigate("/login");
     }
   }, [navigate]);
+
+  const hasShownToastRef = useRef(false);
+
+  useEffect(() => {
+    if (!["pre1", "pre2", "pre3"].includes(userRole)) {
+      if (!hasShownToastRef.current) {
+        toast.warning("Vui lòng nâng cấp gói để xem nội dung này!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+        hasShownToastRef.current = true;
+      }
+      navigate("/");
+      return;
+    }
+
+    const fetchProductDetail = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${DEFAULT_URL}api/post/${id}`);
+        if (!response.ok) throw new Error("Sản phẩm không tồn tại");
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error("Lỗi khi lấy chi tiết sản phẩm:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProductDetail();
+  }, [id, navigate, userRole]);
+
+  const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    if (product) {
+      const formattedImages = product.images.map((img, index) => ({
+        uid: String(index),
+        name: `image-${index}.png`,
+        status: "done", // Quan trọng để hiển thị ảnh
+        url: img,
+      }));
+      setFileList(formattedImages);
+      form.setFieldsValue({
+        title: product?.title,
+        price: product?.price,
+        images: product?.images?.map((img, index) => ({
+          uid: `${index}`,
+          name: `image-${index}.png`,
+          status: "done",
+          url: img,
+        })),
+        description: product?.description,
+        contactPhone: product.contactPhone,
+        alternativeContact: product.contactOther,
+      });
+    }
+  }, [product, form]);
 
   return (
     <div style={{ position: "relative", margin: "50px auto" }}>
@@ -184,11 +163,7 @@ const UpdatePage = () => {
                 name="title"
                 style={{ width: "50%" }}
               >
-                <Input
-                  placeholder="Enter title"
-                  style={{ width: "100%" }}
-                  readOnly
-                />
+                <Input placeholder="Enter title" style={{ width: "100%" }} />
               </Form.Item>
 
               <Form.Item
@@ -200,16 +175,15 @@ const UpdatePage = () => {
                   min={0}
                   style={{ width: "100%" }}
                   placeholder="Nhập giá sản phẩm"
-                  readOnly
                 />
               </Form.Item>
             </div>
 
             <Form.Item label="Đăng tải ảnh" name="images">
               <Upload
-                customRequest={handleUpload}
                 listType="picture-card"
                 maxCount={4}
+                fileList={fileList}
                 disabled
               >
                 <Button icon={<UploadOutlined />} disabled></Button>
@@ -228,7 +202,6 @@ const UpdatePage = () => {
                 onMouseLeave={(e) =>
                   (e.target.style.backgroundColor = buttonStyle.backgroundColor)
                 }
-                onClick={generateDescription}
                 disabled={true}
               >
                 {loading ? <Spin /> : "Khởi tạo chú thích với AI"}
@@ -239,7 +212,7 @@ const UpdatePage = () => {
               <Input.TextArea
                 rows={4}
                 placeholder="Nhập chú thích về sản phẩm"
-                readOnly
+                disabled
               />
             </Form.Item>
 
@@ -249,7 +222,7 @@ const UpdatePage = () => {
                 name="contactPhone"
                 style={{ flex: 1 }}
               >
-                <Input placeholder="Hãy nhập số điện thoại" readOnly />
+                <Input placeholder="Hãy nhập số điện thoại" disabled />
               </Form.Item>
 
               <Form.Item
@@ -257,7 +230,7 @@ const UpdatePage = () => {
                 name="alternativeContact"
                 style={{ flex: 1 }}
               >
-                <Input placeholder="Nhập phương thức trao đổi khác" readOnly />
+                <Input placeholder="Nhập phương thức trao đổi khác" disabled />
               </Form.Item>
             </div>
 

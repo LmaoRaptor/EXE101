@@ -38,6 +38,8 @@ const MyProductsPage = () => {
       }
     };
 
+    console.log(products);
+
     fetchMyProducts();
   }, [userId, userToken, navigate]);
 
@@ -117,12 +119,12 @@ const MyProductsPage = () => {
                   {product.price.toLocaleString()} VNĐ
                 </p>
 
-                {/* <Button
+                <Button
                   type="primary"
-                  onClick={() => navigate(`/update?product=${product.id}`)}
+                  onClick={() => navigate(`/update/${product.id}`)}
                 >
                   Cập nhật
-                </Button> */}
+                </Button>
 
                 {/* Nút "Còn hàng / Hết hàng" */}
                 <Switch
