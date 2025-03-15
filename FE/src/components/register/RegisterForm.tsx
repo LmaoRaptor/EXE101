@@ -26,7 +26,7 @@ function RegisterForm() {
     const passwordCriteria = /^(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[A-Z]).{8,}$/;
     if (!passwordCriteria.test(value)) {
       setPasswordError(
-        "Password must be at least 8 characters long, include a special character, a number, and an uppercase letter."
+        "Mật khẩu phải có ít nhất 8 ký tự, bao gồm một ký tự đặc biệt, một số và một chữ cái viết hoa."
       );
     } else {
       setPasswordError("");
@@ -37,7 +37,7 @@ function RegisterForm() {
     e.preventDefault();
 
     if (passwordError) {
-      toast.error("Please fix the errors before submitting.");
+      toast.error("Vui lòng sửa lỗi trước khi gửi.");
       return;
     }
 
@@ -50,12 +50,12 @@ function RegisterForm() {
         body: JSON.stringify({ email, password, confirmPassword }),
       });
       if (response.ok) {
-        toast.success("Registration successful!");
+        toast.success("Đăng ký thành công!");
         navigate("/login");
       }
     } catch (error) {
       console.log(error);
-      toast.error("An error occurred. Please try again.");
+      toast.error("Đã xảy ra lỗi. Vui lòng thử lại.");
     }
   };
 
@@ -64,7 +64,7 @@ function RegisterForm() {
       className="bg-white p-6 rounded shadow-md w-96"
       onSubmit={handleSubmit}
     >
-      <h2 className="text-2xl mb-4 text-center">Register</h2>
+      <h2 className="text-2xl mb-4 text-center">Đăng ký</h2>
       <div className="mb-4">
         <label className="block text-gray-700">Email</label>
         <input
@@ -76,7 +76,7 @@ function RegisterForm() {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Password</label>
+        <label className="block text-gray-700">Mật khẩu</label>
         <input
           type="password"
           value={password}
@@ -93,8 +93,18 @@ function RegisterForm() {
         className="w-full bg-green-900 text-white p-2 rounded hover:bg-green-800"
         disabled={!!passwordError}
       >
-        Register
+        Đăng ký
       </button>
+      <p className="text-center mt-4">
+        Nếu bạn đã có tài khoản, hãy
+        <button
+          type="button"
+          onClick={() => navigate("/login")}
+          className="text-green-600 ml-1"
+        >
+          đăng nhập ngay
+        </button>
+      </p>
     </form>
   );
 }

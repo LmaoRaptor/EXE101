@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DEFAULT_URL } from "../../settingHere";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormProps {
   handleLoginSuccess: () => void;
@@ -11,6 +12,7 @@ function LoginForm({ handleLoginSuccess }: LoginFormProps) {
   const [passwordError, setPasswordError] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -26,7 +28,7 @@ function LoginForm({ handleLoginSuccess }: LoginFormProps) {
     const passwordCriteria = /^(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[A-Z]).{8,}$/;
     if (!passwordCriteria.test(value)) {
       setPasswordError(
-        "Password must be at least 8 characters long, include a special character, a number, and an uppercase letter."
+        "Mật khẩu phải có ít nhất 8 ký tự, bao gồm một ký tự đặc biệt, một số và một chữ cái viết hoa."
       );
     } else {
       setPasswordError("");
@@ -69,7 +71,7 @@ function LoginForm({ handleLoginSuccess }: LoginFormProps) {
       onSubmit={handleSubmit}
       style={{ position: "absolute", marginTop: "120px", width: "500px" }}
     >
-      <h2 className="text-2xl mb-4 text-center">Login</h2>
+      <h2 className="text-2xl mb-4 text-center">Đăng nhập</h2>
       {errorMessage && (
         <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
       )}
@@ -85,7 +87,7 @@ function LoginForm({ handleLoginSuccess }: LoginFormProps) {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Password</label>
+        <label className="block text-gray-700">Mật khẩu</label>
         <input
           type="password"
           value={password}
@@ -102,8 +104,18 @@ function LoginForm({ handleLoginSuccess }: LoginFormProps) {
         className="w-full bg-green-900 text-white p-2 rounded hover:bg-green-800 disabled:opacity-50"
         disabled={!!passwordError || loading}
       >
-        {loading ? "Logging in..." : "Login"}
+        {loading ? "Đang đăng nhập..." : "Đăng nhập"}
       </button>
+
+      <p className="text-center mt-4 text-gray-700">
+        Nếu bạn chưa có tài khoản, hãy
+        <button
+          onClick={() => navigate("/register")}
+          className="text-green-600 ml-1"
+        >
+          đăng ký với chúng tôi
+        </button>
+      </p>
     </form>
   );
 }

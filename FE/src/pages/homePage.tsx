@@ -1,22 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import SliderProduct from "../components/slider/sliderProduct";
-import { useEffect, useState } from "react";
-import { Modal } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  //const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsModalOpen(true);
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsModalOpen(true);
+  //   }, 3000);
+  // }, []);
 
   return (
     <>
-      <Modal
+      {/* <Modal
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
@@ -31,7 +28,7 @@ const HomePage = () => {
           alt="Thông báo"
           className="w-full rounded-lg"
         />
-      </Modal>
+      </Modal> */}
       <div>
         <div className="mt-20 ml-10 mr-10">
           <div className="flex gap-4 justify-center items-center">
@@ -60,12 +57,17 @@ const HomePage = () => {
               </span>
             </div>
             <div className="ml-14 rotate-12 flex text-center flex-col justify-center items-center rounded-full size-20 bg-gradient-to-r from-[#64d08f] from-0% via-slate-200 via-70% to-[#64eb98] to-90%">
-              <span className="font-semibold">200+</span> sản phẩm
+              <span className="font-semibold">100+</span> sản phẩm
             </div>
           </div>
         </div>
         <div className="flex justify-center items-end gap-4 mt-6">
-          <div className="h-80 w-72 rounded-3xl bg-green-950"></div>
+          <div
+            onClick={() => navigate("/products")}
+            className="h-80 w-72 rounded-3xl bg-green-950 flex items-center justify-center text-white font-black text-[20px] cursor-pointer"
+          >
+            Xem sản phẩm
+          </div>
           <div>
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="text-gray-300">
@@ -85,12 +87,45 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex gap-4 items-end">
-              <div className="h-56 w-48 bg-green-800 rounded-3xl"></div>
-              <div className="h-36 w-48 bg-green-900 rounded-3xl"></div>
-              <div className="h-56 w-48 bg-green-800 rounded-3xl"></div>
+              <div className="h-56 w-48  flex items-end justify-center">
+                <img
+                  src="../public/img/Cơ bản.png"
+                  alt=""
+                  className="scale-150"
+                />
+              </div>
+              <div className="relative">
+                <img
+                  src="../public/img/Cao cấp.png"
+                  alt=""
+                  className="bottom-[37px] z-[-1] scale-[2.5] absolute"
+                />
+                <div
+                  onClick={() => navigate("/payment")}
+                  className="h-36 w-48 bg-green-900 rounded-3xl flex items-center justify-center text-white font-black text-[20px] cursor-pointer"
+                >
+                  Nâng cấp
+                </div>
+              </div>
+
+              <div className="h-56 w-48 flex items-end justify-center">
+                <img
+                  src="../public/img/Cơ bản.png"
+                  alt=""
+                  className="scale-150"
+                />
+              </div>
             </div>
           </div>
-          <div className="h-80 w-72 rounded-3xl bg-green-900"></div>
+          <div
+            className="h-80 w-72 rounded-3xl bg-green-900 flex items-center justify-center text-white font-black text-[20px] cursor-pointer"
+            onClick={() =>
+              (window.location.href =
+                "https://www.facebook.com/profile.php?id=61572443900116")
+            }
+          >
+            Liên hệ
+          </div>
         </div>
       </div>
       <div>

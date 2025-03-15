@@ -18,6 +18,8 @@ import PaymentPage from "./pages/paymentPage";
 import BlogPage from "./pages/blogPage";
 import NotFoundPage from "./components/error/ErrorPage";
 import GoogleAnalytics from "./utils/googleAnalytics";
+import MyProductsPage from "./pages/MyProductsPage";
+import UpdatePage from "./pages/updatePage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -27,7 +29,7 @@ function AppWrapper() {
     <>
       {!isAuthPage && (
         <>
-          <div id="contentComponent">
+          <div id="contentComponent" className="min-h-screen">
             <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -36,6 +38,8 @@ function AppWrapper() {
               <Route path="/create" element={<CreatePage />} />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/blog" element={<BlogPage />} />
+              <Route path="/myproduct" element={<MyProductsPage />} />
+              <Route path="/update" element={<UpdatePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>

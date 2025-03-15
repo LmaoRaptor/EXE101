@@ -1,11 +1,39 @@
 import { useNavigate } from "react-router-dom";
 import UserDropdown from "../user/userDrop";
 import { MessageOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const userToken = sessionStorage.getItem("userToken");
-  const parsedData = JSON.parse(userToken);
+  const parsedData = userToken ? JSON.parse(userToken) : null;
+  const userRole = parsedData?.role?.[parsedData.role.length - 1];
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const notifyUpgrade = () => {
+    toast.warn("Hãy nâng cấp tài khoản để trải nghiệm đầy đủ tính năng!", {
+      position: "top-right",
+    });
+  };
+
+  const handleSearch = () => {
+    if (!userRole || userRole === "user") {
+      notifyUpgrade();
+      return;
+    }
+
+    navigate(`/products?search=${encodeURIComponent(searchTerm)}`);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
   return (
     <div className="flex gap-4">
       <img
@@ -16,6 +44,7 @@ const Navbar = () => {
         className="size-10 cursor-pointer"
         onClick={() => navigate("/")}
       />
+
       <div className="flex gap-4 mr-5 ml-5">
         <div className="flex gap-[0.5px] flex-col">
           <div className="flex gap-[0.5px]">
@@ -57,64 +86,105 @@ const Navbar = () => {
             </div>
             <input
               type="text"
-              id="simple-search"
-              className="bg-gray-100 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 
-             outline-none"
+              className="bg-gray-100 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 outline-none"
               placeholder="Nhập tên sản phẩm..."
-              required
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value.trim())}
+              onKeyDown={handleKeyDown} // Bắt sự kiện Enter
             />
           </div>
         </div>
         <ul className="flex gap-10 items-center justify-center list-none text-[12px]">
-          <li>Xe đạp</li>
-          <li>Điện thoại</li>
-          <li>Máy ảnh</li>
-          <li>Bàn học</li>
-          <li>Ghế ngồi</li>
-          <li>Chuột máy tính</li>
+          <li>Tin cậy</li>
+          <li>Nhanh nhẹn</li>
+          <li>Nhiệt huyết</li>
+          <li>Trách nhiệm</li>
+          <li>Uy tín</li>
+          <li>Linh hoạt</li>
         </ul>
       </div>
 
-      {parsedData?.role.includes("User") ? (
+      {/* Hiển thị UserDropdown nếu có user */}
+
+      {/* Điều kiện hiển thị các nút nâng cấp/đăng nhập */}
+      {userRole === "user" && (
         <div
           className="h-10 bg-green-900 rounded-lg text-white uppercase 
-      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
-      whitespace-nowrap cursor-pointer"
+          flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+          whitespace-nowrap cursor-pointer"
           onClick={() => navigate("/payment")}
         >
           Nâng cấp
         </div>
-      ) : (
+      )}
+
+      {userRole === "pre1" && (
         <div
           className="h-10 bg-green-900 rounded-lg text-white uppercase 
-      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
-      whitespace-nowrap cursor-pointer"
+            flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+            whitespace-nowrap"
         >
-          Premium
+          Gói cơ bản
         </div>
       )}
 
-      {userToken ? (
+      {userRole === "pre2" && (
         <div
           className="h-10 bg-green-900 rounded-lg text-white uppercase 
-      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
-      whitespace-nowrap cursor-pointer"
+            flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+            whitespace-nowrap cursor-pointer"
+        >
+          Gói tiêu chuẩn
+        </div>
+      )}
+
+      {userRole === "pre3" && (
+        <div
+          className="h-10 bg-green-900 rounded-lg text-white uppercase 
+            flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+            whitespace-nowrap cursor-pointer"
+        >
+          Gói cao cấp
+        </div>
+      )}
+
+      {/* Nếu chưa đăng nhập, hiển thị nút đăng nhập và nâng cấp */}
+      {!userRole && (
+        <>
+          <div
+            className="h-10 bg-green-900 rounded-lg text-white uppercase 
+            flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+            whitespace-nowrap cursor-pointer"
+            onClick={() => navigate("/payment")}
+          >
+            Nâng cấp
+          </div>
+          <div
+            className="h-10 bg-green-900 rounded-lg text-white uppercase 
+            flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+            whitespace-nowrap cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            Đăng nhập
+          </div>
+        </>
+      )}
+
+      {/* Nút Đăng đồ nếu đã đăng nhập */}
+      {userToken && (
+        <div
+          className="h-10 bg-green-900 rounded-lg text-white uppercase 
+          flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
+          whitespace-nowrap cursor-pointer"
           onClick={() => navigate("/create")}
         >
           Đăng đồ
         </div>
-      ) : (
-        <div
-          className="h-10 bg-green-900 rounded-lg text-white uppercase 
-      flex items-center justify-center font-medium text-[14px] pl-3 pr-3 
-      whitespace-nowrap cursor-pointer"
-          onClick={() => navigate("/login")}
-        >
-          Đăng nhập
-        </div>
       )}
 
-      <UserDropdown />
+      {userRole && <UserDropdown />}
+
+      {/* Nút liên hệ Facebook */}
       <a
         href="https://www.facebook.com/profile.php?id=61572443900116"
         target="_blank"

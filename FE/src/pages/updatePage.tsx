@@ -65,7 +65,7 @@ const descriptions = [
   "Qua ngay trong 1 nốt nhạc! {title} pass giá ${price}, không nhanh là bay!",
 ];
 
-const CreatePage = () => {
+const UpdatePage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -182,22 +182,25 @@ const CreatePage = () => {
               <Form.Item
                 label="Tên sản phẩm"
                 name="title"
-                rules={[{ required: true, message: "Hãy nhập tên sản phẩm" }]}
                 style={{ width: "50%" }}
               >
-                <Input placeholder="Enter title" style={{ width: "100%" }} />
+                <Input
+                  placeholder="Enter title"
+                  style={{ width: "100%" }}
+                  readOnly
+                />
               </Form.Item>
 
               <Form.Item
                 label="Giá sản phẩm(vnđ)"
                 name="price"
-                rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
                 style={{ width: "50%" }}
               >
                 <InputNumber
                   min={0}
                   style={{ width: "100%" }}
                   placeholder="Nhập giá sản phẩm"
+                  readOnly
                 />
               </Form.Item>
             </div>
@@ -207,8 +210,9 @@ const CreatePage = () => {
                 customRequest={handleUpload}
                 listType="picture-card"
                 maxCount={4}
+                disabled
               >
-                <Button icon={<UploadOutlined />}></Button>
+                <Button icon={<UploadOutlined />} disabled></Button>
               </Upload>
             </Form.Item>
 
@@ -225,22 +229,17 @@ const CreatePage = () => {
                   (e.target.style.backgroundColor = buttonStyle.backgroundColor)
                 }
                 onClick={generateDescription}
-                disabled={loading}
+                disabled={true}
               >
                 {loading ? <Spin /> : "Khởi tạo chú thích với AI"}
               </Button>
             </Form.Item>
 
-            <Form.Item
-              label="Chú thích sản phẩm"
-              name="description"
-              rules={[
-                { required: true, message: "Hãy nhập chú thích về sản phẩm" },
-              ]}
-            >
+            <Form.Item label="Chú thích sản phẩm" name="description">
               <Input.TextArea
                 rows={4}
                 placeholder="Nhập chú thích về sản phẩm"
+                readOnly
               />
             </Form.Item>
 
@@ -249,23 +248,16 @@ const CreatePage = () => {
                 label="Số điện thoại liên lạc"
                 name="contactPhone"
                 style={{ flex: 1 }}
-                rules={[{ required: true, message: "Hãy nhập số điện thoại" }]}
               >
-                <Input placeholder="Hãy nhập số điện thoại" />
+                <Input placeholder="Hãy nhập số điện thoại" readOnly />
               </Form.Item>
 
               <Form.Item
                 label="Phương thức trao đổi khác"
                 name="alternativeContact"
                 style={{ flex: 1 }}
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy nhập phương thức trao đổi khác",
-                  },
-                ]}
               >
-                <Input placeholder="Nhập phương thức trao đổi khác" />
+                <Input placeholder="Nhập phương thức trao đổi khác" readOnly />
               </Form.Item>
             </div>
 
@@ -283,7 +275,7 @@ const CreatePage = () => {
                   (e.target.style.backgroundColor = buttonStyle.backgroundColor)
                 }
               >
-                Tạo bài viết
+                Cập nhật bài viết
               </Button>
             </Form.Item>
           </Form>
@@ -326,4 +318,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default UpdatePage;

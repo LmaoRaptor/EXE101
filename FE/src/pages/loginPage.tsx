@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 function LoginPage() {
   const navigate = useNavigate();
   const handleSubmitForm = () => {
-    toast.success("Login successful!");
+    toast.success("Đăng nhập thành công!");
     navigate("/");
   };
   return (

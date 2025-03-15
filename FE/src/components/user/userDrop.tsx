@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Dropdown, Menu } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const UserDropdown = () => {
   const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userToken = sessionStorage.getItem("userToken");
@@ -32,6 +34,13 @@ const UserDropdown = () => {
     <Menu className="rounded-xl shadow-lg">
       <Menu.Item key="1" className="p-2 font-semibold text-gray-800">
         {username}
+      </Menu.Item>
+      <Menu.Item
+        key="3"
+        onClick={() => navigate("/myproduct")}
+        className="p-2 font-semibold text-gray-800"
+      >
+        Sản phẩm của tôi
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item

@@ -1,4 +1,20 @@
+import { useState } from "react";
+
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = () => {
+    if (!email) return;
+    setLoading(true);
+    setSuccess(false);
+
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+    }, 2000);
+  };
   return (
     <footer className="bg-green-900 text-white py-10 w-full">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1280px]">
@@ -8,27 +24,31 @@ const Footer = () => {
               Hãy tham gia cùng Y.S để có thể tìm được những đồ vật bạn cần
               thiết
             </h2>
-            <div className="flex items-center space-x-2 mb-2 gap-4">
-              <input
-                type="email"
-                placeholder="Hãy nhập email"
-                className="p-2 w-full max-w-xs rounded-sm text-white outline-none  border-b border-white bg-transparent"
-              />
-              <button className="bg-green-700 text-white py-2 px-4 rounded-lg">
-                Nhập
-              </button>
+            <div className="flex flex-col space-y-2 max-w-xs">
+              <div className="flex items-center space-x-2 gap-4 mb-4">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Hãy nhập email"
+                  className="p-2 w-full rounded-sm text-white outline-none border-b border-white bg-transparent"
+                />
+                <button
+                  onClick={handleSubmit}
+                  disabled={loading}
+                  className="bg-green-700 text-white py-2 px-4 rounded-lg disabled:bg-gray-500 whitespace-nowrap"
+                >
+                  {loading ? "Đang xử lý..." : "Nhập"}
+                </button>
+              </div>
+              {success && (
+                <p className="text-green-500 text-sm mb-2">Cảm ơn quý khách</p>
+              )}
             </div>
             <p className="text-sm text-gray-300">
               Bằng cách gửi địa chỉ email của bạn, bạn đồng ý nhận email tiếp
-              thị từ Y.S và chấp nhận{" "}
-              <a href="#" className="underline">
-                điều khoản và điều kiện
-              </a>{" "}
-              và{" "}
-              <a href="#" className="underline">
-                chính sách bảo mật
-              </a>
-              .
+              thị từ Y.S và chấp nhận <a href="#">điều khoản và điều kiện</a> và{" "}
+              <a href="#">chính sách bảo mật</a>.
             </p>
           </div>
 
@@ -42,7 +62,10 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61572443900116"
+                    className="hover:underline"
+                  >
                     Messeger
                   </a>
                 </li>
@@ -53,49 +76,31 @@ const Footer = () => {
               <h3 className="font-semibold mb-2">Về</h3>
               <ul className="space-y-1">
                 <li>
-                  <a href="#" className="hover:underline">
-                    Nhiệm Vụ
+                  <a href="/products" className="hover:underline">
+                    Danh sách sản phẩm
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
-                    Sự nghiệp
+                  <a href="/register" className="hover:underline">
+                    Đăng ký
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
-                    Đồng hành
+                  <a href="/login" className="hover:underline">
+                    Đăng nhâp
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
-                    FAQ
+                  <a href="/payment" className="hover:underline">
+                    Thanh toán
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a
+                    href="https://www.facebook.com/share/p/129JJG2DFCv/"
+                    className="hover:underline"
+                  >
                     Tác giả
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-2">Support</h3>
-              <ul className="space-y-1">
-                <li>
-                  <a href="#" className="hover:underline">
-                    Trao đổi
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Mua bán
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Trung tâm hỗ trợ & FAQ
                   </a>
                 </li>
               </ul>
