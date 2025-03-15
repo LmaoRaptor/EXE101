@@ -42,5 +42,12 @@ namespace EXE_Bussiness.Service.PostService
 		/// <param name="id"></param>
 		/// <returns></returns>
 		Task<bool> DeletePost(Ulid id);
+		/// <summary>
+		/// Delete post
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns>false if post not found and not updated</returns>
+		Task<bool> UpdateStatus(Ulid id, int status);
+
 	}
 }

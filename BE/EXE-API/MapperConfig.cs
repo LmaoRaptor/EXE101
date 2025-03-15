@@ -37,6 +37,10 @@ namespace EXE_API
 				.ForMember(dest => dest.SubCategoryId, opt => opt.MapFrom(src => Ulid.Parse(src.SubCategoryId)))
 				.ForMember(dest => dest.Images, opt => opt.Ignore())
 				.ReverseMap();
+			CreateMap<PostUpdateRequest, Post>()
+				.ForMember(dest => dest.SubCategoryId, opt => opt.MapFrom(src => Ulid.Parse(src.SubCategoryId)))
+				.ForMember(dest => dest.Images, opt => opt.Ignore())
+				.ReverseMap();
 		}
 
 		public void SubCategoryMapperConfig()
