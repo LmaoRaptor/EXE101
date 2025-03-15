@@ -27,12 +27,22 @@ namespace EXE_API.Controllers
 			return Ok(await _userService.GetAll());
 		}
 
-		[HttpGet("add-roles")]
-		public async Task<IActionResult> AddRoles(string email)
+		[HttpGet("upgrade")]
+		public async Task<IActionResult> AddRoles(string paymentId)
 		{
-			var id = _context.Users.FirstOrDefault(x => x.Email == email).Id;
+			Ulid id;
+			if(!Ulid.TryParse(paymentId, out id))
+			{
+				return BadRequest("Invalid payment id");
+			}
 			await _userService.UpgradeAccount(id);
 			return Ok("Done");
+		}
+
+		[HttpGet("payment-list")]
+		public async Task<IActionResult> PaymentList()
+		{
+			return Ok(await _userService.PaymentList());
 		}
 
 		// POST api/<UserController>
@@ -49,6 +59,18 @@ namespace EXE_API.Controllers
 		{
 			var result = await _userService.AddUserToRole(req.RoleName, req.Email);
 			return Ok(result);
+		}
+
+		[HttpPost("request-update")]
+		public async Task<IActionResult> CreateRequestUpdate([FromBody] UpgradeAccountRequest request)
+		{
+			return await _userService.CreateRequestUpdate(request) switch
+			{
+				1 => BadRequest("User not found"),
+				2 => BadRequest("Role not found"),
+				3 => BadRequest("Id not in format"),
+				_ => Ok("Request created")
+			};
 		}
 
 		// DELETE api/<UserController>/5

@@ -29,17 +29,17 @@ namespace EXE_Bussiness.Service.UserService
 			return _mapper.Map<List<UserDTO>>(users);
 		}
 
-		public async Task<bool> UpgradeAccount(Ulid id)
+		public async Task<bool> UpgradeAccount(Ulid paymentId)
 		{
-			var user = await _context.Users.FindAsync(id);
-			if(user == null)
+			var payment = await _context.Payments.FindAsync(paymentId);
+			if(payment == null)
 			{
-				_logger.LogError("User not found");
+				_logger.LogError("Payment not found");
 				return false;
 			}
-			user.IsSaler = true;
-			await _userManager.AddToRoleAsync(user, "Premium");
-			_logger.LogInformation("User upgraded to premium");
+			await AddUserToRole(payment.RoleName, payment.UserEmail);
+			payment.IsDone = true;
+			await _context.SaveChangesAsync();
 			return true;
 		}
 
@@ -77,10 +77,53 @@ namespace EXE_Bussiness.Service.UserService
 				return "User already have this role";
 			}
 			user.IsSaler = true;
+			user.PremiumExpired = DateTime.Now.AddDays((double)role.Exprired);
 			var result = await _userManager.AddToRoleAsync(user, roleName);
 			_context.SaveChanges();
 			_logger.LogInformation("Role added successfully");
 			return "Role added successfully";
+		}
+
+		public async Task<int> CreateRequestUpdate(UpgradeAccountRequest request)
+		{
+			string userId = request.UserName.Substring(5);
+			Ulid ulid;
+			if(!Ulid.TryParse(userId, out ulid))
+			{
+				_logger.LogError("Invalid user id");
+				return 3;
+			}
+			var user = _context.Users.Find(ulid);
+			if (user == null)
+			{
+				_logger.LogError("User not found");
+				return 1;
+			}
+			var role = await _context.Roles.FirstOrDefaultAsync(x => x.Name == request.RoleName);
+			if(role == null)
+			{
+				_logger.LogError("Role not found");
+				return 2;
+			}
+			decimal price = (decimal)_context.Roles.FirstOrDefault(x => x.Name == request.RoleName).Price;
+			var payment = new Payment
+			{
+				Id = Ulid.NewUlid(),
+				RoleName = request.RoleName,
+				UserEmail = user.NormalizedEmail,
+				UserName = user.UserName,
+				IsDone = false,
+				Amount = price
+			};
+			_context.Payments.Add(payment);
+			await _context.SaveChangesAsync();
+			_logger.LogInformation("Request created successfully");
+			return 0;
+		}
+
+		public async Task<IEnumerable<Payment>> PaymentList()
+		{
+			return _context.Payments.Where(x => x.IsDone == false).ToList();
 		}
 	}
 }

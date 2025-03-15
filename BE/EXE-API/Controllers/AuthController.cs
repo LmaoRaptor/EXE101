@@ -54,6 +54,7 @@ namespace EXE_API.Controllers
 			return Ok(new LoginResponse()
 			{
 				UserName = user.UserName,
+				Email = user.Email,
 				Role = roles.ToList(),
 				Token = new JwtSecurityTokenHandler().WriteToken(token),
 				Expired = (long)token.ValidTo.Subtract(DateTime.UtcNow).TotalSeconds,
@@ -97,7 +98,7 @@ namespace EXE_API.Controllers
 					ModelState.AddModelError("error", error.Description);
 				return BadRequest(ModelState);
 			}
-			await _userManager.AddToRoleAsync(user, "User");
+			await _userManager.AddToRoleAsync(user, "user");
 			return Ok();
 		}
 
@@ -143,7 +144,7 @@ namespace EXE_API.Controllers
 					return BadRequest(ModelState);
 				}
 
-				await _userManager.AddToRoleAsync(user, "User");
+				await _userManager.AddToRoleAsync(user, "user");
 			}
 
 			stopwatch.Stop(); // Stop timer

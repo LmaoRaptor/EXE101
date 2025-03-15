@@ -33,7 +33,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddDbContext<AppDBContext>(options =>
 {
-	options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
+	options.UseMySQL(builder.Configuration.GetConnectionString("DeployConnection"));
 });
 
 builder.Services.AddSingleton(new MapperConfiguration(config =>
@@ -78,8 +78,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
 	options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-	options.AddPolicy("User", policy => policy.RequireRole("User"));
-	options.AddPolicy("Premium", policy => policy.RequireRole("PREMIUM"));
+	options.AddPolicy("User", policy => policy.RequireRole("user"));
+	options.AddPolicy("Pre1", policy => policy.RequireRole("pre1"));
 	options.AddPolicy("Pre2", policy => policy.RequireRole("pre2"));
 	options.AddPolicy("Pre3", policy => policy.RequireRole("pre3"));
 });
