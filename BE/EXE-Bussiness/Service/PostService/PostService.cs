@@ -89,7 +89,7 @@ namespace EXE_Bussiness.Service.PostService
 
 		public async Task<PagedResponse<PostListItem>> Filter(PostFilterRequest postFilter)
 		{
-			var posts = _context.Posts.Include(x => x.User).Include(x => x.SubCategory).Include(x => x.Images).Where(x => x.Status == EXE_Data.Data.EnumType.PostStatusEnum.New).AsQueryable();
+			var posts = _context.Posts.Include(x => x.User).Include(x => x.SubCategory).Include(x => x.Images).AsQueryable();
 			if(postFilter.SubCategoryId != null)
 			{
 				posts = posts.Where(x => x.SubCategoryId == Ulid.Parse(postFilter.SubCategoryId));
@@ -143,7 +143,7 @@ namespace EXE_Bussiness.Service.PostService
 
 		public async Task<IEnumerable<PostListItem>> GetPostList()
 		{
-			var post = await _context.Posts.Include(x => x.User).Include(x => x.SubCategory).Include(x => x.Images).Where(x => x.Status == EXE_Data.Data.EnumType.PostStatusEnum.New).ToListAsync();
+			var post = await _context.Posts.Include(x => x.User).Include(x => x.SubCategory).Include(x => x.Images).ToListAsync();
 			return _mapper.Map<IEnumerable<PostListItem>>(post);
 		}
 
