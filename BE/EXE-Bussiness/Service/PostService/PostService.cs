@@ -40,7 +40,7 @@ namespace EXE_Bussiness.Service.PostService
 			var subCategory = await _context.SubCategories.FindAsync(Ulid.Parse(postCreate.SubCategoryId));
 			post.CategoryId = subCategory.CategoryId;
 			var role = await _userManager.GetRolesAsync(user);
-			if(!role.Contains("pre1") || !role.Contains("pre2") || !role.Contains("pre3"))
+			if(!role.Contains("pre1") && !role.Contains("pre2") && !role.Contains("pre3"))
 			{
 				user.IsSaler = false;
 				_context.Users.Update(user);
