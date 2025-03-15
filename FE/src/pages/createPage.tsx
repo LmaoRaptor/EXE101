@@ -185,7 +185,10 @@ const CreatePage = () => {
                 rules={[{ required: true, message: "Hãy nhập tên sản phẩm" }]}
                 style={{ width: "50%" }}
               >
-                <Input placeholder="Enter title" style={{ width: "100%" }} />
+                <Input
+                  placeholder="Nhập tên sản phẩm"
+                  style={{ width: "100%" }}
+                />
               </Form.Item>
 
               <Form.Item

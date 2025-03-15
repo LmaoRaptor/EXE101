@@ -18,7 +18,7 @@ function RegisterForm() {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
-    setConfirmPassword(value); // Gán confirmPassword bằng password
+    setConfirmPassword(value);
     validatePassword(value);
   };
 

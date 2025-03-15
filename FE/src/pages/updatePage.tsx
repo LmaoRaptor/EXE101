@@ -30,7 +30,6 @@ const buttonHoverStyle = {
 
 const UpdatePage = () => {
   const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const userToken = sessionStorage.getItem("userToken");
   const parsedData = userToken ? JSON.parse(userToken) : null;
@@ -54,7 +53,7 @@ const UpdatePage = () => {
       });
 
       if (response.ok) {
-        message.success("Item created successfully!");
+        toast.success("Đã cập nhật thành công");
         form.resetFields();
         navigate("/products");
       } else {
@@ -99,15 +98,12 @@ const UpdatePage = () => {
 
     const fetchProductDetail = async () => {
       try {
-        setLoading(true);
         const response = await fetch(`${DEFAULT_URL}api/post/${id}`);
         if (!response.ok) throw new Error("Sản phẩm không tồn tại");
         const data = await response.json();
         setProduct(data);
       } catch (error) {
         console.error("Lỗi khi lấy chi tiết sản phẩm:", error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchProductDetail();
@@ -120,7 +116,7 @@ const UpdatePage = () => {
       const formattedImages = product.images.map((img, index) => ({
         uid: String(index),
         name: `image-${index}.png`,
-        status: "done", // Quan trọng để hiển thị ảnh
+        status: "done",
         url: img,
       }));
       setFileList(formattedImages);
@@ -202,10 +198,8 @@ const UpdatePage = () => {
                 onMouseLeave={(e) =>
                   (e.target.style.backgroundColor = buttonStyle.backgroundColor)
                 }
-                disabled={true}
-              >
-                {loading ? <Spin /> : "Khởi tạo chú thích với AI"}
-              </Button>
+                disabled
+              ></Button>
             </Form.Item>
 
             <Form.Item label="Chú thích sản phẩm" name="description">

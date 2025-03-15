@@ -164,8 +164,7 @@ const HomePage = () => {
             <div className=" rounded-2xl h-44">
               <img
                 className="size-full object-contain rounded-2xl"
-                src="https://tiki.vn/blog/wp-content/uploads/2023/01/JQUxF-p2jppN9a2LO1jTMqSxHCi7N4RAHZ_xlrBW3GZKs0Lp7zr413HjYNMFEvEIelJOCDa3OVnXg1bDhuD_Wwv4jxmj9DMBORcZRUmkgXb6rnsYwpv17M7X2EsTExhP63rjrOy4DHVUcfZZ0Dz7KkUizwJ5UQrqq3mpclJF0GcZB4Ww2Qvv52FRWujMUA.png"
-                alt=""
+                src="../public/img/z6406317078999_b618518ed67778a08c8fa9f285aae9df.jpg"
               />
             </div>
             <div className="size-full object-cover rounded-2xl h-44">

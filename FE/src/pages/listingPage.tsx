@@ -35,7 +35,8 @@ const ListingPage = () => {
       try {
         setLoading(true); // Hiển thị loading khi bắt đầu tìm kiếm
         const response = await fetch(
-          `${DEFAULT_URL}api/post/filter?search=${searchTerm}`
+          `${DEFAULT_URL}api/post/filter?search=${searchTerm}&PageSize=10000`,
+          {}
         );
         const data = await response.json();
         setProducts(data.data);
