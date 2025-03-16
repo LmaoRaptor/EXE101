@@ -106,34 +106,37 @@ const HomePage = () => {
                 Xem tất cả sản phẩm
               </div>
             </div>
-            <div className="flex gap-4 items-end">
-              <div className="h-56 w-48  flex items-end justify-center">
-                <img
-                  src="../public/img/Cơ bản.png"
-                  alt=""
-                  className="scale-150"
-                />
+            <div className="flex gap-4 items-end flex-col">
+              <div className="flex flex-row gap-2 bottom-[-16px] relative mt-[-80px]">
+                <div className="h-56 w-48  flex items-end justify-center">
+                  <img
+                    src="../public/img/Cơ bản.png"
+                    alt=""
+                    className="scale-150"
+                  />
+                </div>
+                <div className="h-56 w-48 flex items-end justify-center">
+                  <img
+                    src="../public/img/Cao cấp.png"
+                    alt=""
+                    className="scale-150 bottom-[-6px] relative"
+                  />
+                </div>
+                <div className="h-56 w-48 flex items-end justify-center">
+                  <img
+                    src="../public/img/Cơ bản.png"
+                    alt=""
+                    className="scale-150"
+                  />
+                </div>
               </div>
-              <div className="relative">
-                <img
-                  src="../public/img/Cao cấp.png"
-                  alt=""
-                  className="bottom-[37px] z-[-1] scale-[2.5] absolute"
-                />
+              <div className="w-full">
                 <div
                   onClick={() => navigate("/payment")}
-                  className="h-24 w-48 bg-green-900 rounded-3xl flex items-center justify-center text-white font-black text-[20px] cursor-pointer"
+                  className="h-24 w-full bg-green-900 rounded-3xl flex items-center justify-center text-white font-black text-[20px] cursor-pointer"
                 >
                   Nâng cấp
                 </div>
-              </div>
-
-              <div className="h-56 w-48 flex items-end justify-center">
-                <img
-                  src="../public/img/Cơ bản.png"
-                  alt=""
-                  className="scale-150"
-                />
               </div>
             </div>
           </div>
