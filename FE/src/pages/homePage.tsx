@@ -106,7 +106,7 @@ const HomePage = () => {
                 Xem tất cả sản phẩm
               </div>
             </div>
-            <div className="flex gap-4 items-end flex-col">
+            <div className="flex gap-4 items-end flex-col overflow-hidden">
               <div className="flex flex-row gap-2 bottom-[-16px] relative mt-[-80px]">
                 <div className="h-56 w-48  flex items-end justify-center">
                   <img
