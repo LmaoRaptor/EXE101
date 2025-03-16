@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductItem from "../components/product/productItem";
 import { DEFAULT_URL } from "../settingHere";
-import { Spin, Button } from "antd";
+import { Spin } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ListingPage = () => {
@@ -35,7 +35,7 @@ const ListingPage = () => {
       try {
         setLoading(true); // Hiển thị loading khi bắt đầu tìm kiếm
         const response = await fetch(
-          `${DEFAULT_URL}api/post/filter?search=${searchTerm}&PageSize=10000`,
+          `${DEFAULT_URL}api/post/filter?search=${searchTerm}&PageSize=1000`,
           {}
         );
         const data = await response.json();

@@ -1,8 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import SliderProduct from "../components/slider/sliderProduct";
+import { useEffect, useState } from "react";
+import { DEFAULT_URL } from "../settingHere";
+import { toast } from "react-toastify";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          `${DEFAULT_URL}api/post/filter?PageSize=3&Index=3`,
+          {}
+        );
+        const data = await response.json();
+        setProducts(data.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
   //const [isModalOpen, setIsModalOpen] = useState(false);
 
   // useEffect(() => {
@@ -159,61 +179,35 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="mt-6 flex gap-4">
-          <div className="flex gap-2 flex-col w-1/2">
-            <div className=" rounded-2xl h-44">
+        <div className="mt-6 flex gap-4 flex-col">
+          <div className="flex gap-2 flex-col w-full">
+            <div className=" rounded-2xl h-[240px]">
               <img
                 className="size-full object-contain rounded-2xl"
-                src="../public/img/z6406317078999_b618518ed67778a08c8fa9f285aae9df.jpg"
+                src="../public/img/Betterimage.ai_1742132875078.jpeg"
               />
-            </div>
-            <div className="size-full object-cover rounded-2xl h-44">
-              <img
-                className="size-full object-cover rounded-2xl"
-                src="https://hondaotohaiphong.com.vn/wp-content/uploads/2020/12/Mausac_trangnga_tinhte.png"
-                alt=""
-              />
-            </div>
-            <div className="flex gap-2">
-              <div className="rounded-2xl h-64 w-1/2">
-                <img
-                  className="size-full object-cover rounded-2xl"
-                  src="https://product.hstatic.net/1000269316/product/230111-instax-mini-12-mint-green-hero-with-photo_0274_stack_05c898cfafa24d0aa9918d71609fcef9.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="rounded-2xl h-64 w-1/2">
-                <img
-                  className="size-full object-cover rounded-2xl"
-                  src="https://product.hstatic.net/200000293662/product/mufc-21-22-home-kit-cr7-02_3d383fd287f246e6b36599513135542e_1024x1024.png"
-                  alt=""
-                />
-              </div>
             </div>
           </div>
           <div className="flex flex-1 flex-col gap-1">
             <div className="flex gap-2 flex-1">
-              <div className="rounded-2xl h-[420px] w-1/2">
-                <img
-                  className="size-full object-cover rounded-2xl"
-                  src="https://cdn.tgdd.vn/Products/Images/42/250258/s16/iphone-13-blue-1-2-3-650x650.png"
-                  alt=""
-                />
-              </div>
-              <div className="rounded-2xl h-[420px] w-1/2">
-                <img
-                  className="size-full object-cover rounded-2xl"
-                  src="https://giavichinsu.com/wp-content/uploads/2023/11/mockup-tuong-ot-chinsu-500g-1.png"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div className=" rounded-2xl h-48">
-              <img
-                className="size-full object-contain rounded-2xl"
-                src="https://cdn-i.vtcnews.vn/resize/th/upload/2023/09/18/xe-20545515.jpg"
-                alt=""
-              />
+              {products.map((item) => (
+                <div className="rounded-2xl h-[240px] w-1/2">
+                  <img
+                    onClick={() =>
+                      toast.warning(
+                        "Vui lòng nâng cấp gói để xem nội dung này!",
+                        {
+                          position: "top-center",
+                          autoClose: 3000,
+                        }
+                      )
+                    }
+                    className="size-full object-cover rounded-2xl cursor-pointer"
+                    src={item?.mainImage}
+                    alt=""
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
