@@ -23,8 +23,11 @@ const Navbar = () => {
       notifyUpgrade();
       return;
     }
-
-    navigate(`/products?search=${encodeURIComponent(searchTerm)}`);
+    navigate(
+      `/products?search=${encodeURIComponent(
+        searchTerm.replace(/\s+/g, " ").trim()
+      )}`
+    );
   };
 
   const handleKeyDown = (e) => {
@@ -89,18 +92,21 @@ const Navbar = () => {
               className="bg-gray-100 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 outline-none"
               placeholder="Nhập tên sản phẩm..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value.trim())}
+              onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown} // Bắt sự kiện Enter
             />
           </div>
         </div>
         <ul className="flex gap-10 items-center justify-center list-none text-[12px]">
-          <li>Tin cậy</li>
-          <li>Nhanh nhẹn</li>
-          <li>Nhiệt huyết</li>
-          <li>Trách nhiệm</li>
-          <li>Uy tín</li>
-          <li>Linh hoạt</li>
+          <li className="cursor-pointer" onClick={() => navigate("/")}>
+            Trang chủ
+          </li>
+          <li className="cursor-pointer" onClick={() => navigate("products")}>
+            Sản phẩm
+          </li>
+          <li className="cursor-pointer" onClick={() => navigate("/aboutus")}>
+            Về chúng tôi
+          </li>
         </ul>
       </div>
 

@@ -20,6 +20,8 @@ import NotFoundPage from "./components/error/ErrorPage";
 import GoogleAnalytics from "./utils/googleAnalytics";
 import MyProductsPage from "./pages/MyProductsPage";
 import UpdatePage from "./pages/updatePage";
+import AboutPage from "./pages/aboutPage";
+import TermsOfUse from "./pages/policyPage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -40,6 +42,8 @@ function AppWrapper() {
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/myproduct" element={<MyProductsPage />} />
               <Route path="/update/:id" element={<UpdatePage />} />
+              <Route path="/aboutus" element={<AboutPage />} />
+              <Route path="/term" element={<TermsOfUse />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>

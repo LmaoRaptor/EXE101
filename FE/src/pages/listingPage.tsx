@@ -90,8 +90,22 @@ const ListingPage = () => {
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      console.log(scrollY);
-      setOpacity(Math.min(1, scrollY / 500));
+      const totalHeight = document.documentElement.scrollHeight;
+      const viewportHeight = window.innerHeight;
+
+      const footerTrigger = totalHeight - viewportHeight - 200;
+
+      let newOpacity;
+
+      if (scrollY < 500) {
+        newOpacity = scrollY / 500;
+      } else if (scrollY > footerTrigger) {
+        newOpacity = Math.max(0, 1 - (scrollY - footerTrigger) / 200);
+      } else {
+        newOpacity = 1;
+      }
+
+      setOpacity(newOpacity);
     };
 
     window.addEventListener("scroll", handleScroll);

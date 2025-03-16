@@ -102,7 +102,7 @@ const HomePage = () => {
                 />
                 <div
                   onClick={() => navigate("/payment")}
-                  className="h-36 w-48 bg-green-900 rounded-3xl flex items-center justify-center text-white font-black text-[20px] cursor-pointer"
+                  className="h-24 w-48 bg-green-900 rounded-3xl flex items-center justify-center text-white font-black text-[20px] cursor-pointer"
                 >
                   Nâng cấp
                 </div>

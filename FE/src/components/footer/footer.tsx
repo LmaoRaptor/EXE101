@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (!email) return;
@@ -57,16 +59,19 @@ const Footer = () => {
               <h3 className="font-semibold mb-2">Cửa hàng</h3>
               <ul className="space-y-1">
                 <li>
-                  <a href="/" className="hover:underline">
+                  <a
+                    onClick={() => navigate("/")}
+                    className="hover:underline cursor-pointer"
+                  >
                     Trang chủ
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://www.facebook.com/profile.php?id=61572443900116"
-                    className="hover:underline"
+                    onClick={() => navigate("/term")}
+                    className="hover:underline cursor-pointer"
                   >
-                    Messeger
+                    Chính sách
                   </a>
                 </li>
               </ul>
@@ -76,29 +81,41 @@ const Footer = () => {
               <h3 className="font-semibold mb-2">Về</h3>
               <ul className="space-y-1">
                 <li>
-                  <a href="/products" className="hover:underline">
+                  <a
+                    onClick={() => navigate("/products")}
+                    className="hover:underline cursor-pointer"
+                  >
                     Danh sách sản phẩm
                   </a>
                 </li>
                 <li>
-                  <a href="/register" className="hover:underline">
+                  <a
+                    onClick={() => navigate("/register")}
+                    className="hover:underline cursor-pointer"
+                  >
                     Đăng ký
                   </a>
                 </li>
                 <li>
-                  <a href="/login" className="hover:underline">
-                    Đăng nhâp
+                  <a
+                    onClick={() => navigate("/login")}
+                    className="hover:underline cursor-pointer"
+                  >
+                    Đăng nhập
                   </a>
                 </li>
                 <li>
-                  <a href="/payment" className="hover:underline">
+                  <a
+                    onClick={() => navigate("/payment")}
+                    className="hover:underline cursor-pointer"
+                  >
                     Thanh toán
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://www.facebook.com/share/p/129JJG2DFCv/"
-                    className="hover:underline"
+                    onClick={() => navigate("/aboutus")}
+                    className="hover:underline cursor-pointer"
                   >
                     Tác giả
                   </a>
