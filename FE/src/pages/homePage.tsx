@@ -183,7 +183,10 @@ const HomePage = () => {
           <div className="flex gap-2 flex-col w-full">
             <div className=" rounded-2xl h-[240px]">
               <img
-                className="size-full object-contain rounded-2xl"
+                onClick={() =>
+                  (window.location.href = "https://indongloi.com/")
+                }
+                className="size-full object-contain rounded-2xl cursor-pointer"
                 src="../public/img/Betterimage.ai_1742132875078.jpeg"
               />
             </div>
