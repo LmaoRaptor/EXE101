@@ -98,11 +98,11 @@ const Navbar = () => {
           </div>
         </div>
         <ul className="flex gap-10 items-center justify-center list-none text-[12px]">
-          <li className="cursor-pointer" onClick={() => navigate("/")}>
-            Trang chủ
-          </li>
           <li className="cursor-pointer" onClick={() => navigate("products")}>
             Sản phẩm
+          </li>
+          <li className="cursor-pointer" onClick={() => navigate("/")}>
+            Trang chủ
           </li>
           <li className="cursor-pointer" onClick={() => navigate("/aboutus")}>
             Về chúng tôi
